@@ -10,13 +10,15 @@ import {
   FiLogOut,
   FiMenu,
   FiX,
-  FiPlus
+  FiPlus,
+  FiHeart
 } from 'react-icons/fi'
 import { useState } from 'react'
 import './Layout.css'
 
 const navItems = [
   { path: '/', label: 'Dashboard', icon: FiHome },
+  { path: '/profile', label: 'Health Profile', icon: FiHeart },
   { path: '/recipes', label: 'Recipes', icon: FiBook },
   { path: '/meal-plans', label: 'Meal Plans', icon: FiCalendar },
   { path: '/shopping-lists', label: 'Shopping Lists', icon: FiShoppingCart },
