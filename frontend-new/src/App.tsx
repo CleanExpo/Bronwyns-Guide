@@ -1,5 +1,4 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
-import { Box } from '@chakra-ui/react'
 import Layout from './components/Layout'
 import Dashboard from './pages/Dashboard'
 import Login from './pages/Login'
@@ -12,12 +11,13 @@ import ShoppingLists from './pages/ShoppingLists'
 import FamilyMembers from './pages/FamilyMembers'
 import Profile from './pages/Profile'
 import { useAuthStore } from './stores/authStore'
+import './styles.css'
 
 function App() {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
 
   return (
-    <Box minH="100vh" bg="gray.50">
+    <div style={{ minHeight: '100vh', background: '#f7fafc' }}>
       <Routes>
         <Route path="/login" element={!isAuthenticated ? <Login /> : <Navigate to="/" />} />
         <Route path="/register" element={!isAuthenticated ? <Register /> : <Navigate to="/" />} />
@@ -33,7 +33,7 @@ function App() {
           <Route path="profile" element={<Profile />} />
         </Route>
       </Routes>
-    </Box>
+    </div>
   )
 }
 

@@ -1,21 +1,7 @@
 import { useState } from 'react'
-import { Link as RouterLink, useNavigate } from 'react-router-dom'
-import {
-  Box,
-  Button,
-  FormControl,
-  FormLabel,
-  Input,
-  VStack,
-  Heading,
-  Text,
-  Link,
-  Alert,
-  AlertIcon,
-  Container,
-  useToast
-} from '@chakra-ui/react'
+import { Link, useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../stores/authStore'
+import '../styles.css'
 
 function Login() {
   const [email, setEmail] = useState('')
@@ -24,7 +10,6 @@ function Login() {
   const [error, setError] = useState('')
   
   const navigate = useNavigate()
-  const toast = useToast()
   const login = useAuthStore((state) => state.login)
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -34,12 +19,6 @@ function Login() {
 
     try {
       await login(email, password)
-      toast({
-        title: 'Login successful',
-        status: 'success',
-        duration: 3000,
-        isClosable: true
-      })
       navigate('/')
     } catch (err: any) {
       setError(err.response?.data?.error || 'Login failed. Please try again.')
@@ -49,73 +28,59 @@ function Login() {
   }
 
   return (
-    <Container maxW="lg" py={{ base: '12', md: '24' }}>
-      <VStack spacing={8}>
-        <VStack spacing={2}>
-          <Heading size="xl" color="purple.600">
-            Bronwyn's Guide
-          </Heading>
-          <Text color="gray.600">Sign in to manage your dietary needs</Text>
-        </VStack>
+    <div className="auth-container">
+      <div className="auth-box">
+        <div className="auth-header">
+          <h1 className="auth-title">Bronwyn's Personal Chief</h1>
+          <p className="auth-subtitle">Sign in to manage your dietary needs</p>
+        </div>
 
-        <Box
-          w="full"
-          maxW="md"
-          bg="white"
-          p={8}
-          borderRadius="lg"
-          boxShadow="sm"
-        >
-          <form onSubmit={handleSubmit}>
-            <VStack spacing={4}>
-              {error && (
-                <Alert status="error" borderRadius="md">
-                  <AlertIcon />
-                  {error}
-                </Alert>
-              )}
+        <form onSubmit={handleSubmit}>
+          {error && (
+            <div className="error-alert">
+              <span>⚠️</span> {error}
+            </div>
+          )}
 
-              <FormControl isRequired>
-                <FormLabel>Email</FormLabel>
-                <Input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter your email"
-                />
-              </FormControl>
+          <div className="form-group">
+            <label className="form-label">Email</label>
+            <input
+              type="email"
+              className="form-input"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter your email"
+              required
+            />
+          </div>
 
-              <FormControl isRequired>
-                <FormLabel>Password</FormLabel>
-                <Input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Enter your password"
-                />
-              </FormControl>
+          <div className="form-group">
+            <label className="form-label">Password</label>
+            <input
+              type="password"
+              className="form-input"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Enter your password"
+              required
+            />
+          </div>
 
-              <Button
-                type="submit"
-                colorScheme="purple"
-                size="lg"
-                w="full"
-                isLoading={isLoading}
-              >
-                Sign In
-              </Button>
+          <button
+            type="submit"
+            className="btn"
+            disabled={isLoading}
+          >
+            {isLoading ? 'Signing in...' : 'Sign In'}
+          </button>
 
-              <Text fontSize="sm" color="gray.600">
-                Don't have an account?{' '}
-                <Link as={RouterLink} to="/register" color="purple.600">
-                  Sign up
-                </Link>
-              </Text>
-            </VStack>
-          </form>
-        </Box>
-      </VStack>
-    </Container>
+          <div className="auth-link">
+            Don't have an account?{' '}
+            <Link to="/register">Sign up</Link>
+          </div>
+        </form>
+      </div>
+    </div>
   )
 }
 

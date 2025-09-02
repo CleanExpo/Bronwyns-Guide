@@ -1,22 +1,7 @@
 import { useState } from 'react'
-import { Link as RouterLink, useNavigate } from 'react-router-dom'
-import {
-  Box,
-  Button,
-  FormControl,
-  FormLabel,
-  Input,
-  VStack,
-  HStack,
-  Heading,
-  Text,
-  Link,
-  Alert,
-  AlertIcon,
-  Container,
-  useToast
-} from '@chakra-ui/react'
+import { Link, useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../stores/authStore'
+import '../styles.css'
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -30,7 +15,6 @@ function Register() {
   const [error, setError] = useState('')
   
   const navigate = useNavigate()
-  const toast = useToast()
   const register = useAuthStore((state) => state.register)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -64,12 +48,6 @@ function Register() {
         lastName: formData.lastName
       })
       
-      toast({
-        title: 'Account created successfully',
-        status: 'success',
-        duration: 3000,
-        isClosable: true
-      })
       navigate('/')
     } catch (err: any) {
       setError(err.response?.data?.error || 'Registration failed. Please try again.')
@@ -79,108 +57,102 @@ function Register() {
   }
 
   return (
-    <Container maxW="lg" py={{ base: '12', md: '24' }}>
-      <VStack spacing={8}>
-        <VStack spacing={2}>
-          <Heading size="xl" color="purple.600">
-            Create Account
-          </Heading>
-          <Text color="gray.600">Join Bronwyn's Guide to manage your dietary needs</Text>
-        </VStack>
+    <div className="auth-container">
+      <div className="auth-box">
+        <div className="auth-header">
+          <h1 className="auth-title">Create Account</h1>
+          <p className="auth-subtitle">Join Bronwyn's Personal Chief</p>
+        </div>
 
-        <Box
-          w="full"
-          maxW="md"
-          bg="white"
-          p={8}
-          borderRadius="lg"
-          boxShadow="sm"
-        >
-          <form onSubmit={handleSubmit}>
-            <VStack spacing={4}>
-              {error && (
-                <Alert status="error" borderRadius="md">
-                  <AlertIcon />
-                  {error}
-                </Alert>
-              )}
+        <form onSubmit={handleSubmit}>
+          {error && (
+            <div className="error-alert">
+              <span>⚠️</span> {error}
+            </div>
+          )}
 
-              <HStack spacing={4} w="full">
-                <FormControl isRequired>
-                  <FormLabel>First Name</FormLabel>
-                  <Input
-                    name="firstName"
-                    value={formData.firstName}
-                    onChange={handleChange}
-                    placeholder="First name"
-                  />
-                </FormControl>
+          <div className="form-row">
+            <div className="form-group">
+              <label className="form-label">First Name</label>
+              <input
+                type="text"
+                name="firstName"
+                className="form-input"
+                value={formData.firstName}
+                onChange={handleChange}
+                placeholder="First name"
+                required
+              />
+            </div>
 
-                <FormControl isRequired>
-                  <FormLabel>Last Name</FormLabel>
-                  <Input
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleChange}
-                    placeholder="Last name"
-                  />
-                </FormControl>
-              </HStack>
+            <div className="form-group">
+              <label className="form-label">Last Name</label>
+              <input
+                type="text"
+                name="lastName"
+                className="form-input"
+                value={formData.lastName}
+                onChange={handleChange}
+                placeholder="Last name"
+                required
+              />
+            </div>
+          </div>
 
-              <FormControl isRequired>
-                <FormLabel>Email</FormLabel>
-                <Input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="Enter your email"
-                />
-              </FormControl>
+          <div className="form-group">
+            <label className="form-label">Email</label>
+            <input
+              type="email"
+              name="email"
+              className="form-input"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="Enter your email"
+              required
+            />
+          </div>
 
-              <FormControl isRequired>
-                <FormLabel>Password</FormLabel>
-                <Input
-                  type="password"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  placeholder="Create a password"
-                />
-              </FormControl>
+          <div className="form-group">
+            <label className="form-label">Password</label>
+            <input
+              type="password"
+              name="password"
+              className="form-input"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Create a password"
+              required
+            />
+          </div>
 
-              <FormControl isRequired>
-                <FormLabel>Confirm Password</FormLabel>
-                <Input
-                  type="password"
-                  name="confirmPassword"
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                  placeholder="Confirm your password"
-                />
-              </FormControl>
+          <div className="form-group">
+            <label className="form-label">Confirm Password</label>
+            <input
+              type="password"
+              name="confirmPassword"
+              className="form-input"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              placeholder="Confirm your password"
+              required
+            />
+          </div>
 
-              <Button
-                type="submit"
-                colorScheme="purple"
-                size="lg"
-                w="full"
-                isLoading={isLoading}
-              >
-                Create Account
-              </Button>
+          <button
+            type="submit"
+            className="btn"
+            disabled={isLoading}
+          >
+            {isLoading ? 'Creating account...' : 'Create Account'}
+          </button>
 
-              <Text fontSize="sm" color="gray.600">
-                Already have an account?{' '}
-                <Link as={RouterLink} to="/login" color="purple.600">
-                  Sign in
-                </Link>
-              </Text>
-            </VStack>
-          </form>
-        </Box>
-      </VStack>
-    </Container>
+          <div className="auth-link">
+            Already have an account?{' '}
+            <Link to="/login">Sign in</Link>
+          </div>
+        </form>
+      </div>
+    </div>
   )
 }
 

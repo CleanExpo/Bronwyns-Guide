@@ -1,28 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { ChakraProvider } from '@chakra-ui/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { BrowserRouter } from 'react-router-dom'
 import App from './App'
 import './index.css'
-import simpleTheme from './theme/simple-theme'
-
-// Comprehensive fix for useLayoutEffect errors
-const originalError = console.error
-console.error = (...args) => {
-  if (typeof args[0] === 'string' && args[0].includes('useLayoutEffect')) {
-    return
-  }
-  originalError(...args)
-}
-
-// Fix React 18 compatibility issues
-if (typeof window !== 'undefined') {
-  // Polyfill for older dependencies
-  if (!React.useLayoutEffect) {
-    React.useLayoutEffect = React.useEffect
-  }
-}
 
 // Simple error boundary wrapper
 class SimpleErrorBoundary extends React.Component<
@@ -81,12 +62,10 @@ const queryClient = new QueryClient({
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <QueryClientProvider client={queryClient}>
-    <ChakraProvider theme={simpleTheme}>
-      <BrowserRouter>
-        <SimpleErrorBoundary>
-          <App />
-        </SimpleErrorBoundary>
-      </BrowserRouter>
-    </ChakraProvider>
+    <BrowserRouter>
+      <SimpleErrorBoundary>
+        <App />
+      </SimpleErrorBoundary>
+    </BrowserRouter>
   </QueryClientProvider>
 )
