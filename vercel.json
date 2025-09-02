@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "buildCommand": "cd frontend-new && rm -rf node_modules dist .vite && npm cache clean --force && npm install --legacy-peer-deps && npm run build",
+  "buildCommand": "cd frontend-new && rm -rf node_modules dist .vite .next && npm cache clean --force && yarn cache clean && npm install --legacy-peer-deps --no-cache && npm run build",
   "outputDirectory": "frontend-new/dist",
   "framework": "vite",
   "functions": {
@@ -34,7 +34,15 @@
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "no-cache, no-store, must-revalidate"
+          "value": "no-cache, no-store, must-revalidate, proxy-revalidate"
+        },
+        {
+          "key": "Pragma",
+          "value": "no-cache"
+        },
+        {
+          "key": "Expires",
+          "value": "0"
         }
       ]
     },
@@ -43,7 +51,7 @@
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
+          "value": "no-cache, no-store, must-revalidate"
         }
       ]
     }

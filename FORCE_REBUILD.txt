@@ -1,0 +1,11 @@
+FORCE_REBUILD_TIMESTAMP: 1756854900
+CYAN_THEME_DEPLOYED: true
+MOBILE_OPTIMIZED: true
+VERSION: 2.0.4-FORCE-REBUILD
+
+This file forces Vercel to rebuild by changing file structure.
+All changes should be visible:
+- Cyan theme (#0891b2)
+- Mobile image fixes
+- Responsive layouts
+- Cache busting implemented
