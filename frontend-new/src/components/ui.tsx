@@ -114,6 +114,13 @@ export const CardBody = ({ children, ...props }: any) => (
   </div>
 )
 
+export const Icon = ({ as: Component = 'span', ...props }: any) => {
+  if (Component && typeof Component === 'function') {
+    return <Component {...props} />
+  }
+  return <span {...props} />
+}
+
 export const IconButton = ({ icon, onClick, ...props }: any) => (
   <button className="icon-button" onClick={onClick} {...props}>
     {icon}
@@ -136,11 +143,21 @@ export const Textarea = ({ ...props }: any) => (
   <textarea className="form-input" {...props} />
 )
 
+export interface UseToastOptions {
+  title?: string
+  description?: string
+  status?: 'success' | 'error' | 'warning' | 'info'
+  duration?: number
+  isClosable?: boolean
+}
+
 export const useToast = () => {
-  return () => {
-    console.log('Toast shown')
+  return (options?: UseToastOptions) => {
+    console.log('Toast shown', options)
   }
 }
+
+export const useChakraToast = useToast
 
 export const useColorMode = () => {
   return { colorMode: 'light', toggleColorMode: () => {} }
@@ -159,3 +176,14 @@ export const extendTheme = (config: any) => config
 
 // ChakraProvider stub for compatibility
 export const ChakraProvider = ({ children, theme }: any) => children
+
+// Additional exports for compatibility
+export type ThemeConfig = any
+export const Divider = () => <hr style={{ border: '1px solid #e2e8f0', margin: '1rem 0' }} />
+export const Spacer = () => <div style={{ flex: 1 }} />
+export const Image = ({ src, alt, ...props }: any) => <img src={src} alt={alt} {...props} />
+export const Progress = ({ value, max = 100 }: any) => (
+  <div style={{ background: '#e2e8f0', borderRadius: '4px', height: '8px', overflow: 'hidden' }}>
+    <div style={{ background: '#6B4C93', width: `${(value / max) * 100}%`, height: '100%' }} />
+  </div>
+)
