@@ -1,5 +1,5 @@
-import { createClient } from '@supabase/supabase-js';
-import dotenv from 'dotenv';
+const { createClient } = require('@supabase/supabase-js');
+const dotenv = require('dotenv');
 
 dotenv.config();
 
@@ -21,7 +21,7 @@ if (supabaseUrl && supabaseKey) {
 }
 
 // Database helper functions
-export const supabaseDb = {
+const supabaseDb = {
   // Check if Supabase is configured
   isConfigured: () => {
     return supabase !== null;
@@ -330,4 +330,4 @@ export const supabaseDb = {
   }
 };
 
-export default supabaseDb;
+module.exports = { supabaseDb };

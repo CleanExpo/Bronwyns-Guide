@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useAuthStore } from '../stores/authStore'
-import { FiUser, FiAlertCircle, FiShield, FiHeart, FiSave, FiPlus, FiX, FiCamera, FiUpload } from 'react-icons/fi'
+import { FiUser, FiAlertCircle, FiShield, FiHeart, FiSave, FiPlus, FiX, FiCamera, FiUpload, FiDownload, FiUploadCloud } from 'react-icons/fi'
+import { useToast } from '../components/ui'
+import axios from 'axios'
 import './Profile.css'
 
 // Common health conditions
@@ -106,22 +108,207 @@ function Profile() {
     emergencyContactRelation: ''
   })
 
-  // Load saved profile from localStorage
+  const toast = useToast()
+
+  // Load saved profile from localStorage or Supabase
   useEffect(() => {
-    const savedProfile = localStorage.getItem('userHealthProfile')
-    if (savedProfile) {
-      setProfileData(JSON.parse(savedProfile))
-    }
+    loadProfile()
   }, [])
 
-  const handleSave = () => {
-    // Save to localStorage
+  const loadProfile = async () => {
+    // First try localStorage
+    const savedProfile = localStorage.getItem('userHealthProfile')
+    if (savedProfile) {
+      try {
+        setProfileData(JSON.parse(savedProfile))
+      } catch (error) {
+        console.error('Error loading saved profile:', error)
+      }
+    }
+
+    // If user is logged in, try to load from cloud
+    if (user?.token) {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL || 'http://localhost:5001/api'}/profile/load`,
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`
+            }
+          }
+        )
+        
+        if (response.data.success && response.data.profile) {
+          setProfileData(prev => ({ ...prev, ...response.data.profile }))
+        }
+      } catch (error) {
+        console.log('No cloud profile found or error loading:', error)
+      }
+    }
+  }
+
+  const handleSave = async () => {
+    // Always save to localStorage
     localStorage.setItem('userHealthProfile', JSON.stringify(profileData))
+    
+    // If user is logged in, save to cloud
+    if (user?.token) {
+      try {
+        const response = await axios.post(
+          `${import.meta.env.VITE_API_URL || 'http://localhost:5001/api'}/profile/save`,
+          {
+            name: `${profileData.firstName} ${profileData.lastName}`,
+            phone: profileData.phone,
+            dateOfBirth: profileData.dateOfBirth,
+            healthConditions: profileData.healthConditions,
+            allergies: profileData.allergies,
+            dietaryPreferences: profileData.dietaryPreferences,
+            medications: profileData.medications.split(',').map(m => m.trim()).filter(m => m),
+            emergencyContactName: profileData.emergencyContactName,
+            emergencyContactPhone: profileData.emergencyContactPhone,
+            emergencyContactRelation: profileData.emergencyContactRelation,
+            notes: profileData.notes
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`
+            }
+          }
+        )
+        
+        if (response.data.success) {
+          toast({
+            title: 'Profile saved',
+            description: 'Your profile has been saved to the cloud',
+            status: 'success'
+          })
+        }
+      } catch (error) {
+        console.error('Error saving to cloud:', error)
+        toast({
+          title: 'Profile saved locally',
+          description: 'Saved to device only (cloud save failed)',
+          status: 'warning'
+        })
+      }
+    } else {
+      toast({
+        title: 'Profile saved',
+        description: 'Your profile has been saved locally',
+        status: 'success'
+      })
+    }
+    
     setIsEditing(false)
     setHasUnsavedChanges(false)
-    
-    // Show success message
-    alert('Profile saved successfully!')
+  }
+
+  const handleCloudSave = async () => {
+    if (!user?.token) {
+      toast({
+        title: 'Please log in',
+        description: 'You need to be logged in to save to cloud',
+        status: 'error'
+      })
+      return
+    }
+
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL || 'http://localhost:5001/api'}/profile/save`,
+        {
+          name: `${profileData.firstName} ${profileData.lastName}`,
+          phone: profileData.phone,
+          dateOfBirth: profileData.dateOfBirth,
+          healthConditions: profileData.healthConditions,
+          allergies: profileData.allergies,
+          dietaryPreferences: profileData.dietaryPreferences,
+          medications: profileData.medications.split(',').map(m => m.trim()).filter(m => m),
+          emergencyContactName: profileData.emergencyContactName,
+          emergencyContactPhone: profileData.emergencyContactPhone,
+          emergencyContactRelation: profileData.emergencyContactRelation,
+          notes: profileData.notes
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`
+          }
+        }
+      )
+      
+      if (response.data.success) {
+        // Also save to localStorage
+        localStorage.setItem('userHealthProfile', JSON.stringify(profileData))
+        
+        toast({
+          title: 'Saved to cloud',
+          description: 'Your profile is now backed up to the cloud',
+          status: 'success'
+        })
+      }
+    } catch (error: any) {
+      toast({
+        title: 'Cloud save failed',
+        description: error.response?.data?.message || error.message,
+        status: 'error'
+      })
+    }
+  }
+
+  const handleCloudLoad = async () => {
+    if (!user?.token) {
+      toast({
+        title: 'Please log in',
+        description: 'You need to be logged in to load from cloud',
+        status: 'error'
+      })
+      return
+    }
+
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL || 'http://localhost:5001/api'}/profile/load`,
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`
+          }
+        }
+      )
+      
+      if (response.data.success && response.data.profile) {
+        const cloudProfile = response.data.profile
+        setProfileData(prev => ({ ...prev, ...cloudProfile }))
+        
+        // Also save to localStorage
+        localStorage.setItem('userHealthProfile', JSON.stringify(cloudProfile))
+        
+        toast({
+          title: 'Profile loaded',
+          description: 'Your profile has been loaded from the cloud',
+          status: 'success'
+        })
+      } else {
+        toast({
+          title: 'No cloud profile',
+          description: 'No saved profile found in the cloud',
+          status: 'info'
+        })
+      }
+    } catch (error: any) {
+      if (error.response?.status === 404) {
+        toast({
+          title: 'No cloud profile',
+          description: 'You have not saved a profile to the cloud yet',
+          status: 'info'
+        })
+      } else {
+        toast({
+          title: 'Load failed',
+          description: error.response?.data?.message || error.message,
+          status: 'error'
+        })
+      }
+    }
   }
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -166,9 +353,17 @@ function Profile() {
         <h1>Health Profile</h1>
         <div className="profile-actions">
           {!isEditing ? (
-            <button className="btn-edit" onClick={() => setIsEditing(true)}>
-              Edit Profile
-            </button>
+            <>
+              <button className="btn-edit" onClick={() => setIsEditing(true)}>
+                Edit Profile
+              </button>
+              <button className="btn-cloud-save" onClick={handleCloudSave} title="Save to cloud">
+                <FiUploadCloud /> Save to Cloud
+              </button>
+              <button className="btn-cloud-load" onClick={handleCloudLoad} title="Load from cloud">
+                <FiDownload /> Load from Cloud
+              </button>
+            </>
           ) : (
             <>
               <button className="btn-cancel" onClick={() => {

@@ -31,6 +31,7 @@ mongoose.connect(MONGODB_URI, {
 // Routes
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/users', require('./routes/users'));
+app.use('/api/profile', require('./src/routes/profile'));
 app.use('/api/recipes', require('./routes/recipes'));
 app.use('/api/meal-plans', require('./routes/meal-plans'));
 app.use('/api/shopping-lists', require('./routes/shopping-lists'));
