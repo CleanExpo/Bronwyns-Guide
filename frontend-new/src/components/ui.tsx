@@ -270,3 +270,17 @@ export const DrawerContent = ({ children }: any) => <div className="drawer-conte
 export const DrawerCloseButton = ({ onClick }: any) => (
   <button className="drawer-close" onClick={onClick}>×</button>
 )
+
+// Stat components
+export const Stat = ({ children, ...props }: any) => (
+  <div className="stat" {...props}>{children}</div>
+)
+export const StatLabel = ({ children, ...props }: any) => (
+  <div className="stat-label" style={{ fontSize: '0.875rem', color: '#718096' }} {...props}>{children}</div>
+)
+export const StatNumber = ({ children, ...props }: any) => (
+  <div className="stat-number" style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#2d3748' }} {...props}>{children}</div>
+)
+export const StatHelpText = ({ children, ...props }: any) => (
+  <div className="stat-help" style={{ fontSize: '0.75rem', color: '#a0aec0' }} {...props}>{children}</div>
+)
