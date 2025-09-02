@@ -1,5 +1,7 @@
 {
   "version": 2,
+  "projectId": "prj_wNS42qz4RK46r2xNldigbMkL8aCi",
+  "orgId": "unite-group",
   "buildCommand": "cd frontend-new && npm install --legacy-peer-deps && npm run build",
   "outputDirectory": "frontend-new/dist",
   "framework": "vite",
