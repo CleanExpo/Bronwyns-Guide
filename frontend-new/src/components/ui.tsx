@@ -121,6 +121,34 @@ export const Icon = ({ as: Component = 'span', ...props }: any) => {
   return <span {...props} />
 }
 
+export const Avatar = ({ name = 'User', src, size = 'md', ...props }: any) => {
+  const sizeMap: any = { sm: 32, md: 40, lg: 48 }
+  const pixels = sizeMap[size] || 40
+  
+  if (src) {
+    return <img src={src} alt={name} style={{ width: pixels, height: pixels, borderRadius: '50%' }} {...props} />
+  }
+  
+  return (
+    <div 
+      style={{ 
+        width: pixels, 
+        height: pixels, 
+        borderRadius: '50%', 
+        background: '#6B4C93',
+        color: 'white',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontWeight: 'bold'
+      }} 
+      {...props}
+    >
+      {name.charAt(0).toUpperCase()}
+    </div>
+  )
+}
+
 export const IconButton = ({ icon, onClick, ...props }: any) => (
   <button className="icon-button" onClick={onClick} {...props}>
     {icon}
