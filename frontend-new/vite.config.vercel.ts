@@ -44,8 +44,12 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     sourcemap: false,
+    // Force rebuild all chunks
     rollupOptions: {
       output: {
+        entryFileNames: `assets/[name]-${Date.now()}-[hash].js`,
+        chunkFileNames: `assets/[name]-${Date.now()}-[hash].js`,
+        assetFileNames: `assets/[name]-${Date.now()}-[hash].[ext]`,
         manualChunks: {
           'react-vendor': ['react', 'react-dom', 'react-router-dom'],
           'ui-vendor': ['react-icons', 'recharts'],

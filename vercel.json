@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "buildCommand": "cd frontend-new && npm install --legacy-peer-deps && npm run build",
+  "buildCommand": "cd frontend-new && rm -rf node_modules dist && npm install --legacy-peer-deps && npm run build:vercel",
   "outputDirectory": "frontend-new/dist",
   "framework": "vite",
   "functions": {
@@ -27,5 +27,25 @@
       "NODE_ENV": "production",
       "VITE_API_URL": "/api"
     }
-  }
+  },
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+  ]
 }

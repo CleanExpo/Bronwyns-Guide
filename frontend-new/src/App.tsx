@@ -11,6 +11,7 @@ import ShoppingLists from './pages/ShoppingLists'
 import FamilyMembers from './pages/FamilyMembers'
 import Profile from './pages/Profile'
 import { useAuthStore } from './stores/authStore'
+import { APP_VERSION } from './version'
 import './styles.css'
 
 function App() {
@@ -18,6 +19,9 @@ function App() {
   
   // Allow bypassing authentication - set to true to skip login
   const BYPASS_AUTH = true
+  
+  // Log version on mount for debugging
+  console.log('App Version:', APP_VERSION)
 
   return (
     <div style={{ minHeight: '100vh', background: '#f7fafc' }}>
