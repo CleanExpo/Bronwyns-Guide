@@ -6,6 +6,11 @@ import { BrowserRouter } from 'react-router-dom'
 import App from './App'
 import './index.css'
 
+// Fix for useLayoutEffect warning in SSR
+if (typeof window === 'undefined') {
+  React.useLayoutEffect = React.useEffect
+}
+
 // Simple error boundary wrapper
 class SimpleErrorBoundary extends React.Component<
   { children: React.ReactNode },
