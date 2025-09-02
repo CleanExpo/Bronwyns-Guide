@@ -187,3 +187,41 @@ export const Progress = ({ value, max = 100 }: any) => (
     <div style={{ background: '#6B4C93', width: `${(value / max) * 100}%`, height: '100%' }} />
   </div>
 )
+
+// Menu components
+export const Menu = ({ children }: any) => <div className="menu">{children}</div>
+export const MenuButton = Button
+export const MenuList = ({ children }: any) => <div className="menu-list">{children}</div>
+export const MenuItem = ({ children, onClick }: any) => (
+  <button className="menu-item" onClick={onClick}>{children}</button>
+)
+export const MenuDivider = () => <hr className="menu-divider" />
+
+// Drawer components
+export const useDisclosure = () => {
+  const [isOpen, setIsOpen] = React.useState(false)
+  return {
+    isOpen,
+    onOpen: () => setIsOpen(true),
+    onClose: () => setIsOpen(false),
+    onToggle: () => setIsOpen(!isOpen)
+  }
+}
+
+export const Drawer = ({ isOpen, onClose, children }: any) => {
+  if (!isOpen) return null
+  return (
+    <div className="drawer-overlay" onClick={onClose}>
+      <div className="drawer" onClick={(e) => e.stopPropagation()}>
+        {children}
+      </div>
+    </div>
+  )
+}
+export const DrawerBody = ({ children }: any) => <div className="drawer-body">{children}</div>
+export const DrawerHeader = ({ children }: any) => <div className="drawer-header">{children}</div>
+export const DrawerOverlay = ({ onClick }: any) => <div className="drawer-overlay" onClick={onClick} />
+export const DrawerContent = ({ children }: any) => <div className="drawer-content">{children}</div>
+export const DrawerCloseButton = ({ onClick }: any) => (
+  <button className="drawer-close" onClick={onClick}>×</button>
+)
