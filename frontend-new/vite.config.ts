@@ -28,15 +28,12 @@ export default defineConfig({
       output: {
         manualChunks: (id) => {
           if (id.includes('node_modules')) {
-            if (id.includes('react') || id.includes('react-dom') || id.includes('react-router')) {
+            // All React-related packages in vendor chunk
+            if (id.includes('react')) {
               return 'vendor';
             }
-            if (id.includes('@chakra-ui') || id.includes('@emotion')) {
-              return 'ui';
-            }
-            if (id.includes('axios') || id.includes('date-fns') || id.includes('zustand')) {
-              return 'utils';
-            }
+            // Everything else in vendor too for now to avoid chunking issues
+            return 'vendor';
           }
         }
       }

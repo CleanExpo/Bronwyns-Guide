@@ -1,4 +1,6 @@
 // Analytics and Monitoring Setup
+import { useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 
 interface AnalyticsEvent {
   name: string
@@ -183,9 +185,6 @@ class Analytics {
 export const analytics = new Analytics()
 
 // React hooks for analytics
-import { useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
-
 export const usePageTracking = () => {
   const location = useLocation()
 
