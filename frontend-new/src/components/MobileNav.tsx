@@ -6,7 +6,7 @@ import {
   Text,
   Icon,
   IconButton
-} from '@chakra-ui/react'
+} from '../components/ui'
 import {
   FiHome,
   FiBook,

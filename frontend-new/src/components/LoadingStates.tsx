@@ -11,7 +11,7 @@ import {
   Spinner,
   Center,
   Text
-} from '@chakra-ui/react'
+} from '../components/ui'
 
 export const RecipeCardSkeleton = () => (
   <Card>

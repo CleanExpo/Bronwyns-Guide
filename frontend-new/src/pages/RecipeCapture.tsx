@@ -23,7 +23,7 @@ import {
   DrawerContent,
   DrawerCloseButton,
   useDisclosure
-} from '@chakra-ui/react'
+} from '../components/ui'
 import { FiArrowLeft, FiSave, FiEdit } from 'react-icons/fi'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import axios from 'axios'

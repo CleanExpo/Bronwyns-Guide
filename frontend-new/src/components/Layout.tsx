@@ -23,7 +23,7 @@ import {
   DrawerCloseButton,
   Button,
   Icon
-} from '@chakra-ui/react'
+} from '../components/ui'
 import {
   FiMenu,
   FiHome,

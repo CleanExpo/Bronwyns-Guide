@@ -7,7 +7,7 @@ import {
   Icon,
   Image,
   useColorModeValue
-} from '@chakra-ui/react'
+} from '../components/ui'
 import { 
   FiPlus, 
   FiSearch, 

@@ -1,4 +1,4 @@
-import { useToast as useChakraToast, UseToastOptions } from '@chakra-ui/react'
+import { useToast as useChakraToast, UseToastOptions } from '../components/ui'
 import { FiCheckCircle, FiXCircle, FiAlertCircle, FiInfo } from 'react-icons/fi'
 
 interface ToastOptions extends Omit<UseToastOptions, 'status'> {

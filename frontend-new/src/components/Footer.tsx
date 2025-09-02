@@ -8,7 +8,7 @@ import {
   HStack,
   Divider,
   Icon
-} from '@chakra-ui/react'
+} from '../components/ui'
 import { FiMail, FiCode } from 'react-icons/fi'
 
 function Footer() {

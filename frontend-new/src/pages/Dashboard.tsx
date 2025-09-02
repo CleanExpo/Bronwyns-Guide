@@ -16,7 +16,7 @@ import {
   Icon,
   Button,
   useColorModeValue
-} from '@chakra-ui/react'
+} from '../components/ui'
 import { FiBook, FiCalendar, FiShoppingCart, FiUsers, FiPlus } from 'react-icons/fi'
 import { Link as RouterLink } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'

@@ -1,4 +1,4 @@
-import { Box, Heading, Text, VStack } from '@chakra-ui/react'
+import { Box, Heading, Text, VStack } from '../components/ui'
 import { useAuthStore } from '../stores/authStore'
 
 function Profile() {

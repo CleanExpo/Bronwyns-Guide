@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom'
-import { Box, Heading, Text, VStack } from '@chakra-ui/react'
+import { Box, Heading, Text, VStack } from '../components/ui'
 
 function RecipeDetail() {
   const { id } = useParams()

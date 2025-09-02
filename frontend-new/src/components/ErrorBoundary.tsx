@@ -12,7 +12,7 @@ import {
   AlertDescription,
   Container,
   useColorModeValue
-} from '@chakra-ui/react'
+} from '../components/ui'
 import { FiAlertTriangle, FiRefreshCw } from 'react-icons/fi'
 
 interface Props {

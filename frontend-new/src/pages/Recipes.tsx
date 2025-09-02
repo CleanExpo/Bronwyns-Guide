@@ -26,7 +26,7 @@ import {
   FormLabel,
   Textarea,
   useToast
-} from '@chakra-ui/react'
+} from '../components/ui'
 import { FiSearch, FiPlus, FiHeart, FiClock } from 'react-icons/fi'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { Link as RouterLink } from 'react-router-dom'

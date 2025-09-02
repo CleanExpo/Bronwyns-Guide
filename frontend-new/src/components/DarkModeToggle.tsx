@@ -5,7 +5,7 @@ import {
   useColorModeValue,
   Tooltip,
   Icon
-} from '@chakra-ui/react'
+} from '../components/ui'
 import { FiSun, FiMoon } from 'react-icons/fi'
 
 interface DarkModeToggleProps {

@@ -1,4 +1,4 @@
-import { Box, Heading, Text, VStack, Button, HStack } from '@chakra-ui/react'
+import { Box, Heading, Text, VStack, Button, HStack } from '../components/ui'
 import { FiPlus } from 'react-icons/fi'
 
 function ShoppingLists() {

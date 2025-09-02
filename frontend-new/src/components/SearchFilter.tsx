@@ -34,7 +34,7 @@ import {
   DrawerContent,
   DrawerCloseButton,
   useBreakpointValue
-} from '@chakra-ui/react'
+} from '../components/ui'
 import { FiSearch, FiX, FiFilter, FiChevronDown } from 'react-icons/fi'
 import { useDebounce } from '../hooks/useDebounce'
 

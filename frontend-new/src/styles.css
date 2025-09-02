@@ -246,3 +246,54 @@ body {
 .footer-email:hover {
   text-decoration: underline;
 }
+
+/* Additional utility classes */
+.heading-xl { font-size: 2rem; font-weight: bold; color: #2d3748; }
+.heading-lg { font-size: 1.5rem; font-weight: bold; color: #2d3748; }
+.heading-md { font-size: 1.25rem; font-weight: bold; color: #2d3748; }
+.heading-sm { font-size: 1rem; font-weight: bold; color: #2d3748; }
+
+.alert { padding: 1rem; border-radius: 6px; margin-bottom: 1rem; }
+.alert-info { background: #bee3f8; color: #2c5282; }
+.alert-success { background: #c6f6d5; color: #22543d; }
+.alert-warning { background: #feebc8; color: #7c2d12; }
+.alert-error { background: #fed7d7; color: #c53030; }
+
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+.badge-gray { background: #e2e8f0; color: #4a5568; }
+.badge-purple { background: #e9d8fd; color: #44337a; }
+.badge-green { background: #c6f6d5; color: #22543d; }
+.badge-red { background: #fed7d7; color: #c53030; }
+
+.spinner {
+  display: inline-block;
+  border: 3px solid #e2e8f0;
+  border-top-color: #6B4C93;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+.spinner-sm { width: 16px; height: 16px; }
+.spinner-md { width: 24px; height: 24px; }
+.spinner-lg { width: 32px; height: 32px; }
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.icon-button {
+  background: transparent;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+.icon-button:hover {
+  background: #e2e8f0;
+}

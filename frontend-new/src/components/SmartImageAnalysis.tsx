@@ -43,7 +43,7 @@ import {
   StatNumber,
   StatHelpText,
   Tooltip
-} from '@chakra-ui/react'
+} from '../components/ui'
 import { 
   FiCamera, 
   FiUpload, 

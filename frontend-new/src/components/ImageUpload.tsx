@@ -12,7 +12,7 @@ import {
   IconButton,
   HStack,
   Input
-} from '@chakra-ui/react'
+} from '../components/ui'
 import { FiCamera, FiUpload, FiX, FiImage } from 'react-icons/fi'
 import axios from 'axios'
 
