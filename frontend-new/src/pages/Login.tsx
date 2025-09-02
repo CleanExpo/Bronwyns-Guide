@@ -35,20 +35,6 @@ function Login() {
           <p className="auth-subtitle">Sign in to manage your dietary needs</p>
         </div>
 
-        {/* Test credentials hint */}
-        <div style={{ 
-          background: '#f0f4ff', 
-          border: '1px solid #d0d8ff',
-          borderRadius: '6px',
-          padding: '12px',
-          marginBottom: '20px',
-          fontSize: '14px'
-        }}>
-          <strong>Test Accounts:</strong><br />
-          Username: Bronwyn | Password: Bron1234<br />
-          Username: Kelly | Password: Kelly1234
-        </div>
-
         <form onSubmit={handleSubmit}>
           {error && (
             <div className="error-alert">
