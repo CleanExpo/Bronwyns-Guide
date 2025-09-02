@@ -9,7 +9,8 @@ import {
   FiUser,
   FiLogOut,
   FiMenu,
-  FiX
+  FiX,
+  FiPlus
 } from 'react-icons/fi'
 import { useState } from 'react'
 import './Layout.css'
@@ -159,6 +160,13 @@ function Layout() {
           )
         })}
       </nav>
+
+      {/* Floating Action Button for Mobile */}
+      {location.pathname === '/recipes' && (
+        <RouterLink to="/recipes/new" className="fab mobile-only">
+          <FiPlus />
+        </RouterLink>
+      )}
     </div>
   )
 }

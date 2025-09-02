@@ -27,6 +27,7 @@ body {
   align-items: center;
   justify-content: center;
   padding: 1rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
 .auth-box {
@@ -296,4 +297,56 @@ body {
 }
 .icon-button:hover {
   background: #e2e8f0;
+}
+
+/* Mobile Auth Enhancements */
+@media (max-width: 768px) {
+  .auth-container {
+    padding: 0;
+    align-items: flex-end;
+  }
+  
+  .auth-box {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 20px 20px 0 0;
+    padding: 2rem 1.5rem;
+    min-height: 70vh;
+    animation: slideUp 0.3s ease-out;
+  }
+  
+  @keyframes slideUp {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+  
+  .auth-title {
+    font-size: 1.75rem;
+  }
+  
+  .auth-subtitle {
+    font-size: 0.875rem;
+  }
+  
+  .form-input {
+    padding: 1rem;
+    font-size: 1rem;
+    border-radius: 12px;
+  }
+  
+  .btn {
+    padding: 1rem;
+    font-size: 1rem;
+    border-radius: 12px;
+    font-weight: 600;
+  }
+  
+  .auth-link {
+    font-size: 0.875rem;
+    padding: 1rem 0;
+  }
 }
