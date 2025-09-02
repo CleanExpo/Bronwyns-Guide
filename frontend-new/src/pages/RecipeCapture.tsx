@@ -100,8 +100,8 @@ function RecipeCapture() {
         healthProfile // Include health profile in AI analysis
       })
 
-      // Save recipe
-      const recipeData = {
+      // Save recipe with final data
+      const finalRecipeData = {
         originalSource: {
           type: imageUrl ? 'image' : 'text',
           url: imageUrl || undefined,
@@ -119,7 +119,7 @@ function RecipeCapture() {
         tags: []
       }
 
-      const response = await axios.post('/api/recipes', recipeData)
+      const response = await axios.post('/api/recipes', finalRecipeData)
       return response.data
     },
     onSuccess: () => {
