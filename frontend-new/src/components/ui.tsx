@@ -562,3 +562,222 @@ export const ModalFooter = ({ children, ...props }: any) => (
     {children}
   </div>
 )
+
+// Tooltip component
+export const Tooltip = ({ children, label, placement = 'top', ...props }: any) => {
+  const [showTooltip, setShowTooltip] = React.useState(false)
+  
+  return (
+    <div 
+      style={{ position: 'relative', display: 'inline-block' }}
+      onMouseEnter={() => setShowTooltip(true)}
+      onMouseLeave={() => setShowTooltip(false)}
+      {...props}
+    >
+      {children}
+      {showTooltip && label && (
+        <div 
+          style={{
+            position: 'absolute',
+            bottom: placement === 'top' ? '100%' : 'auto',
+            top: placement === 'bottom' ? '100%' : 'auto',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            marginBottom: placement === 'top' ? '8px' : '0',
+            marginTop: placement === 'bottom' ? '8px' : '0',
+            padding: '6px 12px',
+            background: '#2d3748',
+            color: 'white',
+            borderRadius: '4px',
+            fontSize: '0.875rem',
+            whiteSpace: 'nowrap',
+            zIndex: 1000,
+            pointerEvents: 'none'
+          }}
+        >
+          {label}
+        </div>
+      )}
+    </div>
+  )
+}
+
+// Alert components
+export const AlertTitle = ({ children, ...props }: any) => (
+  <div style={{ fontWeight: 'bold', marginBottom: '0.25rem' }} {...props}>
+    {children}
+  </div>
+)
+
+export const AlertDescription = ({ children, ...props }: any) => (
+  <div style={{ fontSize: '0.875rem' }} {...props}>
+    {children}
+  </div>
+)
+
+// Skeleton components for loading states
+export const Skeleton = ({ height = '20px', width = '100%', startColor = '#f7fafc', endColor = '#e2e8f0', ...props }: any) => (
+  <div 
+    className="skeleton"
+    style={{
+      height,
+      width,
+      background: `linear-gradient(90deg, ${startColor} 25%, ${endColor} 50%, ${startColor} 75%)`,
+      backgroundSize: '200% 100%',
+      animation: 'skeleton-loading 1.5s infinite',
+      borderRadius: '4px'
+    }}
+    {...props}
+  />
+)
+
+export const SkeletonText = ({ noOfLines = 3, spacing = '0.5rem', skeletonHeight = '16px', ...props }: any) => (
+  <div {...props}>
+    {Array.from({ length: noOfLines }).map((_, i) => (
+      <Skeleton 
+        key={i} 
+        height={skeletonHeight}
+        width={i === noOfLines - 1 ? '80%' : '100%'}
+        style={{ marginBottom: i < noOfLines - 1 ? spacing : 0 }}
+      />
+    ))}
+  </div>
+)
+
+export const SkeletonCircle = ({ size = '40px', ...props }: any) => (
+  <Skeleton 
+    height={size}
+    width={size}
+    style={{ borderRadius: '50%' }}
+    {...props}
+  />
+)
+
+// List components
+export const List = ({ children, spacing = 2, styleType = 'none', ...props }: any) => (
+  <ul 
+    style={{ 
+      listStyle: styleType,
+      padding: styleType === 'none' ? 0 : '0 0 0 1.5rem',
+      margin: 0
+    }}
+    {...props}
+  >
+    {React.Children.map(children, (child, index) => 
+      child ? React.cloneElement(child as any, { 
+        style: { 
+          ...((child as any).props?.style || {}),
+          marginBottom: index < React.Children.count(children) - 1 ? `${spacing * 4}px` : 0 
+        }
+      }) : null
+    )}
+  </ul>
+)
+
+export const ListItem = ({ children, ...props }: any) => (
+  <li 
+    style={{ 
+      display: 'flex',
+      alignItems: 'center'
+    }}
+    {...props}
+  >
+    {children}
+  </li>
+)
+
+export const ListIcon = ({ as: Component, color = '#48bb78', ...props }: any) => {
+  const IconComponent = Component || (() => <span>•</span>)
+  return (
+    <span 
+      style={{ 
+        marginRight: '0.5rem',
+        color,
+        display: 'inline-flex',
+        alignItems: 'center'
+      }}
+      {...props}
+    >
+      <IconComponent />
+    </span>
+  )
+}
+
+// Tab components
+export const Tabs = ({ children, defaultIndex = 0, onChange, ...props }: any) => {
+  const [selectedIndex, setSelectedIndex] = React.useState(defaultIndex)
+  
+  const handleTabChange = (index: number) => {
+    setSelectedIndex(index)
+    onChange?.(index)
+  }
+  
+  return (
+    <div {...props}>
+      {React.Children.map(children, (child) => {
+        if (React.isValidElement(child)) {
+          return React.cloneElement(child as any, { selectedIndex, onTabChange: handleTabChange })
+        }
+        return child
+      })}
+    </div>
+  )
+}
+
+export const TabList = ({ children, selectedIndex = 0, onTabChange, ...props }: any) => (
+  <div 
+    style={{ 
+      display: 'flex',
+      borderBottom: '2px solid #e2e8f0',
+      marginBottom: '1rem'
+    }}
+    {...props}
+  >
+    {React.Children.map(children, (child, index) => {
+      if (React.isValidElement(child)) {
+        return React.cloneElement(child as any, { 
+          isSelected: selectedIndex === index,
+          onClick: () => onTabChange?.(index)
+        })
+      }
+      return child
+    })}
+  </div>
+)
+
+export const Tab = ({ children, isSelected, onClick, ...props }: any) => (
+  <button
+    style={{
+      padding: '0.75rem 1rem',
+      background: 'none',
+      border: 'none',
+      borderBottom: isSelected ? '2px solid #6B4C93' : '2px solid transparent',
+      color: isSelected ? '#6B4C93' : '#718096',
+      fontWeight: isSelected ? 'bold' : 'normal',
+      cursor: 'pointer',
+      marginBottom: '-2px',
+      transition: 'all 0.2s'
+    }}
+    onClick={onClick}
+    {...props}
+  >
+    {children}
+  </button>
+)
+
+export const TabPanels = ({ children, selectedIndex = 0, ...props }: any) => (
+  <div {...props}>
+    {React.Children.map(children, (child, index) => {
+      if (React.isValidElement(child) && index === selectedIndex) {
+        return child
+      }
+      return null
+    })}
+  </div>
+)
+
+export const TabPanel = ({ children, ...props }: any) => (
+  <div {...props}>
+    {children}
+  </div>
+)

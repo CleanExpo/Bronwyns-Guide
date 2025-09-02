@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: bronwyns-guide-app
+    ports:
+      - "3000:3000"  # Frontend
+      - "5001:5001"  # Backend API
+    environment:
+      NODE_ENV: production
+      MONGODB_URI: ${MONGODB_URI:-mongodb://mongo:27017/bronwyns-guide}
+      JWT_SECRET: ${JWT_SECRET:-your-jwt-secret-here}
+      VITE_API_URL: ${VITE_API_URL:-http://localhost:5001/api}
+      VITE_OPENROUTER_API_KEY: ${VITE_OPENROUTER_API_KEY}
+    depends_on:
+      - mongo
+    networks:
+      - bronwyns-network
+    volumes:
+      - ./uploads:/app/uploads
+    restart: unless-stopped
+
+  mongo:
+    image: mongo:7.0
+    container_name: bronwyns-mongo
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME:-admin}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD:-password}
+      MONGO_INITDB_DATABASE: bronwyns-guide
+    volumes:
+      - mongo-data:/data/db
+      - ./scripts/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    networks:
+      - bronwyns-network
+    restart: unless-stopped
+
+volumes:
+  mongo-data:
+
+networks:
+  bronwyns-network:
+    driver: bridge

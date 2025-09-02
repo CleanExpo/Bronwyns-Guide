@@ -287,6 +287,15 @@ body {
   to { transform: rotate(360deg); }
 }
 
+@keyframes skeleton-loading {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
 .icon-button {
   background: transparent;
   border: none;
