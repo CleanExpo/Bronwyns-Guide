@@ -284,3 +284,18 @@ export const StatNumber = ({ children, ...props }: any) => (
 export const StatHelpText = ({ children, ...props }: any) => (
   <div className="stat-help" style={{ fontSize: '0.75rem', color: '#a0aec0' }} {...props}>{children}</div>
 )
+
+// Input group components
+export const InputGroup = ({ children, ...props }: any) => (
+  <div style={{ position: 'relative' }} {...props}>{children}</div>
+)
+export const InputLeftElement = ({ children, ...props }: any) => (
+  <div style={{ position: 'absolute', left: 0, top: '50%', transform: 'translateY(-50%)', paddingLeft: '12px', pointerEvents: 'none' }} {...props}>
+    {children}
+  </div>
+)
+export const InputRightElement = ({ children, ...props }: any) => (
+  <div style={{ position: 'absolute', right: 0, top: '50%', transform: 'translateY(-50%)', paddingRight: '12px' }} {...props}>
+    {children}
+  </div>
+)
