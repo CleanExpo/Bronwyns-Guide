@@ -308,6 +308,10 @@
 
 /* Mobile Responsive */
 @media (max-width: 768px) {
+  .profile-container {
+    padding-bottom: 100px; /* Space for mobile nav */
+  }
+  
   .profile-header {
     flex-direction: column;
     align-items: flex-start;

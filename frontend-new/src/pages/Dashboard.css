@@ -192,8 +192,9 @@
   }
   
   .stats-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
     gap: 1rem;
+    padding-bottom: 100px; /* Space for mobile nav */
   }
   
   .stat-card {

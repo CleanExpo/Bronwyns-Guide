@@ -1,8 +1,12 @@
-const express = require('express');
-const cors = require('cors');
-const dotenv = require('dotenv');
-const mongoose = require('mongoose');
-const path = require('path');
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import mongoose from 'mongoose';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Load environment variables
 dotenv.config();
@@ -29,13 +33,23 @@ mongoose.connect(MONGODB_URI, {
 .catch(err => console.error('❌ MongoDB connection error:', err));
 
 // Routes
-app.use('/api/auth', require('./routes/auth'));
-app.use('/api/users', require('./routes/users'));
-app.use('/api/profile', require('./src/routes/profile'));
-app.use('/api/recipes', require('./routes/recipes'));
-app.use('/api/meal-plans', require('./routes/meal-plans'));
-app.use('/api/shopping-lists', require('./routes/shopping-lists'));
-app.use('/api/ai', require('./routes/ai'));
+import authRoutes from './routes/auth.js';
+import usersRoutes from './routes/users.js';
+import profileRoutes from './src/routes/profile.js';
+import recipesRoutes from './routes/recipes.js';
+import mealPlansRoutes from './routes/meal-plans.js';
+import shoppingListsRoutes from './routes/shopping-lists.js';
+import aiRoutes from './routes/ai.js';
+import imageAnalysisRoutes from './src/routes/imageAnalysis.js';
+
+app.use('/api/auth', authRoutes);
+app.use('/api/users', usersRoutes);
+app.use('/api/profile', profileRoutes);
+app.use('/api/recipes', recipesRoutes);
+app.use('/api/meal-plans', mealPlansRoutes);
+app.use('/api/shopping-lists', shoppingListsRoutes);
+app.use('/api/ai', aiRoutes);
+app.use('/api/image', imageAnalysisRoutes);
 
 // Health check endpoint
 app.get('/health', (req, res) => {
@@ -76,4 +90,4 @@ app.listen(PORT, () => {
   console.log(`📊 Health check: http://localhost:${PORT}/health`);
 });
 
-module.exports = app;
+export default app;

@@ -28,12 +28,16 @@ import { FiArrowLeft, FiSave, FiEdit } from 'react-icons/fi'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import axios from 'axios'
 import ImageUpload from '../components/ImageUpload'
+import SmartImageAnalysis from '../components/SmartImageAnalysis'
 
 function RecipeCapture() {
   const [imageUrl, setImageUrl] = useState<string>('')
   const [recipeText, setRecipeText] = useState('')
   const [recipeTitle, setRecipeTitle] = useState('')
   const [notes, setNotes] = useState('')
+  const [ingredients, setIngredients] = useState<any[]>([])
+  const [nutritionInfo, setNutritionInfo] = useState<any>(null)
+  const [showAnalysis, setShowAnalysis] = useState(false)
   const { isOpen, onOpen, onClose } = useDisclosure()
   
   const navigate = useNavigate()
@@ -60,6 +64,8 @@ function RecipeCapture() {
         processedRecipe: {
           ...aiResponse.data.analysis,
           title: recipeTitle || aiResponse.data.analysis.title,
+          ingredients: ingredients.length > 0 ? ingredients : aiResponse.data.analysis.ingredients,
+          nutritionInfo: nutritionInfo || aiResponse.data.analysis.nutritionInfo,
           isSafe: true,
           isModified: false
         },
@@ -110,7 +116,19 @@ function RecipeCapture() {
         <FormLabel fontSize={{ base: 'sm', md: 'md' }}>
           Recipe Image
         </FormLabel>
-        <ImageUpload onImageUploaded={setImageUrl} />
+        <ImageUpload onImageUploaded={(url) => {
+          setImageUrl(url)
+          setShowAnalysis(true)
+        }} />
+        {imageUrl && showAnalysis && (
+          <Box mt={4}>
+            <SmartImageAnalysis 
+              imageUrl={imageUrl}
+              onIngredientsIdentified={setIngredients}
+              onNutritionAnalyzed={setNutritionInfo}
+            />
+          </Box>
+        )}
       </FormControl>
 
       <Divider />

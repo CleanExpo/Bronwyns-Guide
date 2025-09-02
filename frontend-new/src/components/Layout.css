@@ -374,8 +374,9 @@
   
   .page-content {
     padding: 1rem;
-    padding-bottom: 80px; /* Space for mobile nav */
-    min-height: calc(100vh - 124px); /* Account for header and nav */
+    padding-bottom: 100px; /* Extra space for mobile nav */
+    min-height: calc(100vh - 64px); /* Account for header */
+    margin-bottom: 60px; /* Additional margin for nav */
   }
   
   .app-header {
