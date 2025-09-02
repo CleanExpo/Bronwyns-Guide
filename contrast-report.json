@@ -1,0 +1,72 @@
+{
+  "timestamp": "2025-09-02T22:14:17.582Z",
+  "pages": {
+    "Login": {
+      "url": "http://localhost:3003/login",
+      "totalElements": 0,
+      "violations": [],
+      "passes": 0,
+      "incomplete": [],
+      "failingElements": [],
+      "warningElements": [],
+      "summary": {
+        "failing": 0,
+        "warning": 0,
+        "passing": 0
+      }
+    },
+    "Dashboard": {
+      "url": "http://localhost:3003/",
+      "totalElements": 0,
+      "violations": [],
+      "passes": 0,
+      "incomplete": [],
+      "failingElements": [],
+      "warningElements": [],
+      "summary": {
+        "failing": 0,
+        "warning": 0,
+        "passing": 0
+      }
+    },
+    "Profile": {
+      "url": "http://localhost:3003/profile",
+      "totalElements": 0,
+      "violations": [],
+      "passes": 0,
+      "incomplete": [],
+      "failingElements": [],
+      "warningElements": [],
+      "summary": {
+        "failing": 0,
+        "warning": 0,
+        "passing": 0
+      }
+    },
+    "Recipes": {
+      "url": "http://localhost:3003/recipes",
+      "totalElements": 0,
+      "violations": [],
+      "passes": 0,
+      "incomplete": [],
+      "failingElements": [],
+      "warningElements": [],
+      "summary": {
+        "failing": 0,
+        "warning": 0,
+        "passing": 0
+      }
+    },
+    "Mobile": {
+      "violations": [],
+      "passes": 0
+    }
+  },
+  "issues": [],
+  "recommendations": [],
+  "summary": {
+    "totalFailingElements": 0,
+    "criticalIssues": 0,
+    "recommendations": []
+  }
+}

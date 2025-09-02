@@ -1,0 +1,245 @@
+{
+  "timestamp": "2025-09-02T22:15:58.056Z",
+  "summary": {
+    "total": 21,
+    "passing": 9,
+    "warning": 8,
+    "failing": 4
+  },
+  "results": {
+    "passing": [
+      {
+        "name": "Purple button on white",
+        "textColor": "#6B4C93",
+        "bgColor": "#ffffff",
+        "ratio": 6.82,
+        "meetsNormalAA": true,
+        "meetsLargeAA": true,
+        "meetsNormalAAA": false,
+        "meetsLargeAAA": true
+      },
+      {
+        "name": "White text on purple",
+        "textColor": "#ffffff",
+        "bgColor": "#6B4C93",
+        "ratio": 6.82,
+        "meetsNormalAA": true,
+        "meetsLargeAA": true,
+        "meetsNormalAAA": false,
+        "meetsLargeAAA": true
+      },
+      {
+        "name": "Purple on light purple",
+        "textColor": "#6B4C93",
+        "bgColor": "#e9d8fd",
+        "ratio": 5.1,
+        "meetsNormalAA": true,
+        "meetsLargeAA": true,
+        "meetsNormalAAA": false,
+        "meetsLargeAAA": true
+      },
+      {
+        "name": "Dark text on white",
+        "textColor": "#2d3748",
+        "bgColor": "#ffffff",
+        "ratio": 11.99,
+        "meetsNormalAA": true,
+        "meetsLargeAA": true,
+        "meetsNormalAAA": true,
+        "meetsLargeAAA": true
+      },
+      {
+        "name": "Medium text on white",
+        "textColor": "#4a5568",
+        "bgColor": "#ffffff",
+        "ratio": 7.53,
+        "meetsNormalAA": true,
+        "meetsLargeAA": true,
+        "meetsNormalAAA": true,
+        "meetsLargeAAA": true
+      },
+      {
+        "name": "Dark text on gray bg",
+        "textColor": "#2d3748",
+        "bgColor": "#f7fafc",
+        "ratio": 11.44,
+        "meetsNormalAA": true,
+        "meetsLargeAA": true,
+        "meetsNormalAAA": true,
+        "meetsLargeAAA": true
+      },
+      {
+        "name": "Input text",
+        "textColor": "#2d3748",
+        "bgColor": "#ffffff",
+        "ratio": 11.99,
+        "meetsNormalAA": true,
+        "meetsLargeAA": true,
+        "meetsNormalAAA": true,
+        "meetsLargeAAA": true
+      },
+      {
+        "name": "Input label",
+        "textColor": "#4a5568",
+        "bgColor": "#ffffff",
+        "ratio": 7.53,
+        "meetsNormalAA": true,
+        "meetsLargeAA": true,
+        "meetsNormalAAA": true,
+        "meetsLargeAAA": true
+      },
+      {
+        "name": "Nav text active",
+        "textColor": "#6B4C93",
+        "bgColor": "#ffffff",
+        "ratio": 6.82,
+        "meetsNormalAA": true,
+        "meetsLargeAA": true,
+        "meetsNormalAAA": false,
+        "meetsLargeAAA": true
+      }
+    ],
+    "failing": [
+      {
+        "name": "Success text",
+        "textColor": "#48bb78",
+        "bgColor": "#ffffff",
+        "ratio": 2.43,
+        "meetsNormalAA": false,
+        "meetsLargeAA": false,
+        "meetsNormalAAA": false,
+        "meetsLargeAAA": false
+      },
+      {
+        "name": "Warning text",
+        "textColor": "#ecc94b",
+        "bgColor": "#ffffff",
+        "ratio": 1.61,
+        "meetsNormalAA": false,
+        "meetsLargeAA": false,
+        "meetsNormalAAA": false,
+        "meetsLargeAAA": false
+      },
+      {
+        "name": "Green badge on white",
+        "textColor": "#48bb78",
+        "bgColor": "#ffffff",
+        "ratio": 2.43,
+        "meetsNormalAA": false,
+        "meetsLargeAA": false,
+        "meetsNormalAAA": false,
+        "meetsLargeAAA": false
+      },
+      {
+        "name": "White on green",
+        "textColor": "#ffffff",
+        "bgColor": "#48bb78",
+        "ratio": 2.43,
+        "meetsNormalAA": false,
+        "meetsLargeAA": false,
+        "meetsNormalAAA": false,
+        "meetsLargeAAA": false
+      }
+    ],
+    "warning": [
+      {
+        "name": "Light text on white",
+        "textColor": "#718096",
+        "bgColor": "#ffffff",
+        "ratio": 4.02,
+        "meetsNormalAA": false,
+        "meetsLargeAA": true,
+        "meetsNormalAAA": false,
+        "meetsLargeAAA": false
+      },
+      {
+        "name": "Light text on gray bg",
+        "textColor": "#718096",
+        "bgColor": "#f7fafc",
+        "ratio": 3.83,
+        "meetsNormalAA": false,
+        "meetsLargeAA": true,
+        "meetsNormalAAA": false,
+        "meetsLargeAAA": false
+      },
+      {
+        "name": "Input placeholder",
+        "textColor": "#718096",
+        "bgColor": "#ffffff",
+        "ratio": 4.02,
+        "meetsNormalAA": false,
+        "meetsLargeAA": true,
+        "meetsNormalAAA": false,
+        "meetsLargeAAA": false
+      },
+      {
+        "name": "Error text",
+        "textColor": "#e53e3e",
+        "bgColor": "#ffffff",
+        "ratio": 4.13,
+        "meetsNormalAA": false,
+        "meetsLargeAA": true,
+        "meetsNormalAAA": false,
+        "meetsLargeAAA": false
+      },
+      {
+        "name": "Info text",
+        "textColor": "#4299e1",
+        "bgColor": "#ffffff",
+        "ratio": 3.05,
+        "meetsNormalAA": false,
+        "meetsLargeAA": true,
+        "meetsNormalAAA": false,
+        "meetsLargeAAA": false
+      },
+      {
+        "name": "Nav text inactive",
+        "textColor": "#718096",
+        "bgColor": "#ffffff",
+        "ratio": 4.02,
+        "meetsNormalAA": false,
+        "meetsLargeAA": true,
+        "meetsNormalAAA": false,
+        "meetsLargeAAA": false
+      },
+      {
+        "name": "Red badge on white",
+        "textColor": "#e53e3e",
+        "bgColor": "#ffffff",
+        "ratio": 4.13,
+        "meetsNormalAA": false,
+        "meetsLargeAA": true,
+        "meetsNormalAAA": false,
+        "meetsLargeAAA": false
+      },
+      {
+        "name": "White on red",
+        "textColor": "#ffffff",
+        "bgColor": "#e53e3e",
+        "ratio": 4.13,
+        "meetsNormalAA": false,
+        "meetsLargeAA": true,
+        "meetsNormalAAA": false,
+        "meetsLargeAAA": false
+      }
+    ]
+  },
+  "recommendations": [
+    "• Light gray text (#718096) on white has ratio 4.02:1\n    → Consider using #5a6c7d or darker for better readability",
+    "• Ensure all body text meets 4.5:1 contrast ratio",
+    "• Large headings (≥18px) can use 3:1 ratio",
+    "• Interactive elements (buttons, links) should have 4.5:1 ratio",
+    "• Consider using a contrast checking tool during development",
+    "• Test with users who have visual impairments"
+  ],
+  "wcagStandards": {
+    "AA": {
+      "normalText": "4.5:1",
+      "largeText": "3:1 (≥18px or ≥14px bold)"
+    },
+    "AAA": {
+      "normalText": "7:1",
+      "largeText": "4.5:1"
+    }
+  }
+}
