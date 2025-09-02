@@ -27,7 +27,7 @@ body {
   align-items: center;
   justify-content: center;
   padding: 1rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%); /* Cyan gradient */
 }
 
 .auth-box {
@@ -45,7 +45,7 @@ body {
 }
 
 .auth-title {
-  color: #6B4C93;
+  color: #0891b2; /* Cyan-600 */
   font-size: 2rem;
   font-weight: bold;
   margin-bottom: 0.5rem;
@@ -78,8 +78,8 @@ body {
 
 .form-input:focus {
   outline: none;
-  border-color: #6B4C93;
-  box-shadow: 0 0 0 3px rgba(107, 76, 147, 0.1);
+  border-color: #0891b2; /* Cyan-600 */
+  box-shadow: 0 0 0 3px rgba(8, 145, 178, 0.1);
 }
 
 .form-row {
@@ -118,18 +118,18 @@ body {
 }
 
 .password-toggle:hover {
-  color: #6B4C93;
+  color: #0891b2; /* Cyan-600 */
 }
 
 .password-toggle:focus {
   outline: none;
-  color: #6B4C93;
+  color: #0891b2; /* Cyan-600 */
 }
 
 .btn {
   width: 100%;
   padding: 0.75rem;
-  background: #6B4C93;
+  background: #0891b2; /* Cyan-600 */
   color: white;
   border: none;
   border-radius: 6px;
@@ -140,7 +140,7 @@ body {
 }
 
 .btn:hover {
-  background: #553c7a;
+  background: #0e7490; /* Cyan-700 */
 }
 
 .btn:disabled {
@@ -167,7 +167,7 @@ body {
 }
 
 .auth-link a {
-  color: #6B4C93;
+  color: #0891b2; /* Cyan-600 */
   text-decoration: none;
   font-weight: 500;
 }
@@ -211,7 +211,7 @@ body {
 }
 
 .nav-link:hover {
-  color: #6B4C93;
+  color: #0891b2; /* Cyan-600 */
 }
 
 /* Dashboard */
@@ -270,12 +270,12 @@ body {
 }
 
 .footer-brand {
-  color: #6B4C93;
+  color: #0891b2; /* Cyan-600 */
   font-weight: bold;
 }
 
 .footer-email {
-  color: #6B4C93;
+  color: #0891b2; /* Cyan-600 */
   text-decoration: none;
 }
 

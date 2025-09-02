@@ -37,12 +37,12 @@
 }
 
 .btn-edit {
-  background: #6B4C93;
+  background: #0891b2; /* Cyan-600 */
   color: white;
 }
 
 .btn-edit:hover {
-  background: #553c7a;
+  background: #0e7490; /* Cyan-700 */
 }
 
 .btn-save {
@@ -64,25 +64,25 @@
 }
 
 .btn-cloud-save {
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, #06b6d4, #0891b2); /* Cyan gradient */
   color: white;
 }
 
 .btn-cloud-save:hover {
-  background: linear-gradient(135deg, #5a67d8, #6b5b95);
+  background: linear-gradient(135deg, #0ea5e9, #0e7490);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 4px 12px rgba(6, 182, 212, 0.4);
 }
 
 .btn-cloud-load {
-  background: linear-gradient(135deg, #f093fb, #f5576c);
+  background: linear-gradient(135deg, #f59e0b, #d97706); /* Amber gradient */
   color: white;
 }
 
 .btn-cloud-load:hover {
-  background: linear-gradient(135deg, #e580f4, #f04259);
+  background: linear-gradient(135deg, #fbbf24, #b45309);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(240, 147, 251, 0.4);
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
 }
 
 /* Unsaved Warning */
@@ -178,8 +178,8 @@
 
 .btn-upload:hover, .btn-camera:hover {
   background: #f7fafc;
-  border-color: #6B4C93;
-  color: #6B4C93;
+  border-color: #0891b2; /* Cyan-600 */
+  color: #0891b2;
 }
 
 /* Form Grid */
@@ -213,8 +213,8 @@
 .form-field input:focus,
 .form-field textarea:focus {
   outline: none;
-  border-color: #6B4C93;
-  box-shadow: 0 0 0 3px rgba(107, 76, 147, 0.1);
+  border-color: #0891b2; /* Cyan-600 */
+  box-shadow: 0 0 0 3px rgba(8, 145, 178, 0.1);
 }
 
 .form-field input:disabled,
@@ -272,7 +272,7 @@
 
 /* Profile Summary */
 .profile-summary {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%); /* Cyan gradient */
   color: white;
   border-radius: 12px;
   padding: 2rem;

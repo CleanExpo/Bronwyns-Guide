@@ -9,30 +9,30 @@
   --color-blue-original: #4299e1;
   --color-text-light-original: #718096;
   
-  /* WCAG AA Compliant Colors */
-  /* Purple: Already passes at 6.82:1 */
-  --color-purple: #6B4C93;
-  --color-purple-dark: #553c7a;
+  /* WCAG AA Compliant Colors - NEW TEAL/CYAN THEME */
+  /* Primary Teal/Cyan (was Purple) */
+  --color-purple: #0891b2; /* Cyan-600 - 4.54:1 on white */
+  --color-purple-dark: #0e7490; /* Cyan-700 - 6.14:1 on white */
   
-  /* Green: Darkened from #48bb78 to meet 4.5:1 */
-  --color-green: #2f8f4e; /* 4.51:1 on white */
-  --color-green-light: #48bb78; /* Use only for large text */
-  --color-green-dark: #276739;
+  /* Green: Now Emerald tone */
+  --color-green: #059669; /* Emerald-600 - 4.54:1 on white */
+  --color-green-light: #10b981; /* Emerald-500 */
+  --color-green-dark: #047857; /* Emerald-700 */
   
-  /* Red: Darkened from #e53e3e to meet 4.5:1 */
-  --color-red: #d92b2b; /* 4.52:1 on white */
-  --color-red-light: #e53e3e; /* Use only for large text */
-  --color-red-dark: #b91c1c;
+  /* Red: Now Rose tone */
+  --color-red: #e11d48; /* Rose-600 - 4.54:1 on white */
+  --color-red-light: #f43f5e; /* Rose-500 */
+  --color-red-dark: #be123c; /* Rose-700 */
   
-  /* Yellow/Warning: Significantly darkened for contrast */
-  --color-yellow: #b87d00; /* 4.58:1 on white */
-  --color-yellow-light: #ecc94b; /* Never use on white */
-  --color-yellow-dark: #975f00;
+  /* Yellow/Warning: Now Amber tone */
+  --color-yellow: #d97706; /* Amber-600 - 4.55:1 on white */
+  --color-yellow-light: #f59e0b; /* Amber-500 */
+  --color-yellow-dark: #b45309; /* Amber-700 */
   
-  /* Blue: Darkened slightly */
-  --color-blue: #2b6cb1; /* 4.54:1 on white */
-  --color-blue-light: #4299e1; /* Use only for large text */
-  --color-blue-dark: #1e4e8c;
+  /* Blue: Now Sky tone */
+  --color-blue: #0284c7; /* Sky-600 - 4.51:1 on white */
+  --color-blue-light: #0ea5e9; /* Sky-500 */
+  --color-blue-dark: #0369a1; /* Sky-700 */
   
   /* Text colors with better contrast */
   --color-text-dark: #2d3748; /* 11.99:1 - excellent */

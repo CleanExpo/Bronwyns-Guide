@@ -26,7 +26,7 @@
 .sidebar-title {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #6B4C93;
+  color: #0891b2; /* Cyan-600 */
   margin: 0;
 }
 
@@ -59,11 +59,11 @@
 
 .nav-item:hover {
   background: #f7fafc;
-  color: #6B4C93;
+  color: #0891b2; /* Cyan-600 */
 }
 
 .nav-item.active {
-  background: #6B4C93;
+  background: #0891b2; /* Cyan-600 */
   color: white;
 }
 
@@ -267,7 +267,7 @@
 }
 
 .mobile-nav-item.active {
-  color: #6B4C93;
+  color: #0891b2; /* Cyan-600 */
 }
 
 .mobile-nav-item.active::before {
@@ -301,10 +301,10 @@
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background: #6B4C93;
+  background: #0891b2; /* Cyan-600 */
   color: white;
   border: none;
-  box-shadow: 0 4px 12px rgba(107, 76, 147, 0.4);
+  box-shadow: 0 4px 12px rgba(8, 145, 178, 0.4);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -316,7 +316,7 @@
 
 .fab:hover {
   transform: scale(1.1);
-  box-shadow: 0 6px 16px rgba(107, 76, 147, 0.5);
+  box-shadow: 0 6px 16px rgba(8, 145, 178, 0.5);
 }
 
 .fab:active {
