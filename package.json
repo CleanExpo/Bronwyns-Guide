@@ -1,0 +1,42 @@
+{
+  "name": "bronwyns-guide-app",
+  "version": "1.0.0",
+  "description": "Bronwyn's Guide - Dietary Management Application",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend-new && npm run dev",
+    "build": "npm run build:frontend",
+    "build:frontend": "cd frontend-new && npm run build",
+    "build:backend": "cd backend && npm install",
+    "install": "npm run install:backend && npm run install:frontend",
+    "install:backend": "cd backend && npm install",
+    "install:frontend": "cd frontend-new && npm install",
+    "start": "cd backend && npm start",
+    "vercel-build": "npm run install && npm run build",
+    "postinstall": "npm run install:backend && npm run install:frontend"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/bronwyns-guide-app"
+  },
+  "keywords": [
+    "dietary",
+    "health",
+    "meal-planning",
+    "recipes",
+    "crohns",
+    "fnd"
+  ],
+  "author": "Bronwyn",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
