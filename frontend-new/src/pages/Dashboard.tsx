@@ -1,192 +1,116 @@
-import {
-  Box,
-  Grid,
-  GridItem,
-  Heading,
-  Text,
-  VStack,
-  HStack,
-  Stat,
-  StatLabel,
-  StatNumber,
-  StatHelpText,
-  Card,
-  CardBody,
-  CardHeader,
-  Icon,
-  Button,
-  useColorModeValue
-} from '../components/ui'
-import { FiBook, FiCalendar, FiShoppingCart, FiUsers, FiPlus } from 'react-icons/fi'
-import { Link as RouterLink } from 'react-router-dom'
-import { useQuery } from '@tanstack/react-query'
-import axios from 'axios'
+import { FiBook, FiCalendar, FiShoppingCart, FiUsers, FiArrowRight } from 'react-icons/fi'
+import { Link } from 'react-router-dom'
 import { useAuthStore } from '../stores/authStore'
+import './Dashboard.css'
 
 function Dashboard() {
   const user = useAuthStore((state) => state.user)
-  const cardBg = useColorModeValue('white', 'gray.800')
 
-  const { data: stats } = useQuery({
-    queryKey: ['dashboard-stats'],
-    queryFn: async () => {
-      const [recipes, mealPlans, shoppingLists, familyMembers] = await Promise.all([
-        axios.get('/api/recipes?limit=1'),
-        axios.get('/api/meal-plans'),
-        axios.get('/api/shopping-lists'),
-        axios.get('/api/users/family-members')
-      ])
-      
-      return {
-        recipes: recipes.data.pagination?.total || 0,
-        mealPlans: mealPlans.data.length || 0,
-        shoppingLists: shoppingLists.data.length || 0,
-        familyMembers: familyMembers.data.length || 0
-      }
-    }
-  })
+  // Mock data for now - will connect to API later
+  const stats = {
+    recipes: 0,
+    mealPlans: 0,
+    shoppingLists: 0,
+    familyMembers: 0
+  }
 
   const statCards = [
     {
       label: 'Saved Recipes',
-      value: stats?.recipes || 0,
+      value: stats.recipes,
       icon: FiBook,
       color: 'purple',
-      link: '/recipes'
+      link: '/recipes',
+      bgColor: '#f3e8ff'
     },
     {
       label: 'Meal Plans',
-      value: stats?.mealPlans || 0,
+      value: stats.mealPlans,
       icon: FiCalendar,
       color: 'blue',
-      link: '/meal-plans'
+      link: '/meal-plans',
+      bgColor: '#e0f2ff'
     },
     {
       label: 'Shopping Lists',
-      value: stats?.shoppingLists || 0,
+      value: stats.shoppingLists,
       icon: FiShoppingCart,
       color: 'green',
-      link: '/shopping-lists'
+      link: '/shopping-lists',
+      bgColor: '#e6fffa'
     },
     {
       label: 'Family Members',
-      value: stats?.familyMembers || 0,
+      value: stats.familyMembers,
       icon: FiUsers,
       color: 'orange',
-      link: '/family-members'
+      link: '/family-members',
+      bgColor: '#fff5e6'
     }
   ]
 
+  const quickActions = [
+    { label: 'Add New Recipe', link: '/recipes/new', icon: FiBook },
+    { label: 'Create Meal Plan', link: '/meal-plans/new', icon: FiCalendar },
+    { label: 'Generate Shopping List', link: '/shopping-lists/new', icon: FiShoppingCart }
+  ]
+
   return (
-    <VStack spacing={6} align="stretch">
-      <Box>
-        <Heading size="lg" mb={2}>
-          Welcome back, {user?.firstName}!
-        </Heading>
-        <Text color="gray.600">
+    <div className="dashboard">
+      <div className="dashboard-header">
+        <h1 className="dashboard-title">
+          Welcome back, {user?.firstName || 'User'}!
+        </h1>
+        <p className="dashboard-subtitle">
           Here's an overview of your dietary management dashboard
-        </Text>
-      </Box>
+        </p>
+      </div>
 
-      <Grid templateColumns={{ base: '1fr', md: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)' }} gap={6}>
-        {statCards.map((stat) => (
-          <GridItem key={stat.label}>
-            <Card bg={cardBg} shadow="sm" _hover={{ shadow: 'md' }} transition="all 0.2s">
-              <CardBody>
-                <HStack justify="space-between">
-                  <Stat>
-                    <StatLabel color="gray.500">{stat.label}</StatLabel>
-                    <StatNumber fontSize="2xl">{stat.value}</StatNumber>
-                    <StatHelpText>
-                      <Button
-                        as={RouterLink}
-                        to={stat.link}
-                        size="sm"
-                        variant="link"
-                        colorScheme={stat.color}
-                      >
-                        View all
-                      </Button>
-                    </StatHelpText>
-                  </Stat>
-                  <Box
-                    p={3}
-                    bg={`${stat.color}.100`}
-                    borderRadius="lg"
-                  >
-                    <Icon as={stat.icon} boxSize={6} color={`${stat.color}.600`} />
-                  </Box>
-                </HStack>
-              </CardBody>
-            </Card>
-          </GridItem>
-        ))}
-      </Grid>
+      <div className="stats-grid">
+        {statCards.map((stat) => {
+          const Icon = stat.icon
+          return (
+            <Link to={stat.link} key={stat.label} className="stat-card">
+              <div className="stat-icon" style={{ backgroundColor: stat.bgColor }}>
+                <Icon />
+              </div>
+              <div className="stat-content">
+                <div className="stat-label">{stat.label}</div>
+                <div className="stat-value">{stat.value}</div>
+                <div className="stat-link">
+                  View all <FiArrowRight />
+                </div>
+              </div>
+            </Link>
+          )
+        })}
+      </div>
 
-      <Grid templateColumns={{ base: '1fr', lg: 'repeat(2, 1fr)' }} gap={6}>
-        <GridItem>
-          <Card bg={cardBg}>
-            <CardHeader>
-              <HStack justify="space-between">
-                <Heading size="md">Quick Actions</Heading>
-              </HStack>
-            </CardHeader>
-            <CardBody>
-              <VStack spacing={3}>
-                <Button
-                  as={RouterLink}
-                  to="/recipes"
-                  leftIcon={<FiPlus />}
-                  colorScheme="purple"
-                  variant="outline"
-                  w="full"
-                  justifyContent="flex-start"
-                >
-                  Add New Recipe
-                </Button>
-                <Button
-                  as={RouterLink}
-                  to="/meal-plans"
-                  leftIcon={<FiPlus />}
-                  colorScheme="blue"
-                  variant="outline"
-                  w="full"
-                  justifyContent="flex-start"
-                >
-                  Create Meal Plan
-                </Button>
-                <Button
-                  as={RouterLink}
-                  to="/family-members"
-                  leftIcon={<FiPlus />}
-                  colorScheme="orange"
-                  variant="outline"
-                  w="full"
-                  justifyContent="flex-start"
-                >
-                  Add Family Member
-                </Button>
-              </VStack>
-            </CardBody>
-          </Card>
-        </GridItem>
+      <div className="quick-actions-section">
+        <h2 className="section-title">Quick Actions</h2>
+        <div className="quick-actions-grid">
+          {quickActions.map((action) => {
+            const Icon = action.icon
+            return (
+              <Link to={action.link} key={action.label} className="quick-action-card">
+                <Icon className="quick-action-icon" />
+                <span>{action.label}</span>
+              </Link>
+            )
+          })}
+        </div>
+      </div>
 
-        <GridItem>
-          <Card bg={cardBg}>
-            <CardHeader>
-              <Heading size="md">Recent Activity</Heading>
-            </CardHeader>
-            <CardBody>
-              <VStack align="stretch" spacing={3}>
-                <Text fontSize="sm" color="gray.600">
-                  No recent activity to display
-                </Text>
-              </VStack>
-            </CardBody>
-          </Card>
-        </GridItem>
-      </Grid>
-    </VStack>
+      <div className="recent-activity-section">
+        <h2 className="section-title">Recent Activity</h2>
+        <div className="activity-card">
+          <p className="empty-state">No recent activity to show</p>
+          <Link to="/recipes/new" className="cta-button">
+            Get started by adding your first recipe
+          </Link>
+        </div>
+      </div>
+    </div>
   )
 }
 

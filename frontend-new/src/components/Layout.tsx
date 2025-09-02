@@ -1,40 +1,18 @@
-import { Outlet, Link as RouterLink, useLocation } from 'react-router-dom'
-import MobileNav from './MobileNav'
-import Footer from './Footer'
+import { Outlet, Link as RouterLink, useLocation, useNavigate } from 'react-router-dom'
+import { useAuthStore } from '../stores/authStore'
 import {
-  Box,
-  Flex,
-  HStack,
-  VStack,
-  Text,
-  IconButton,
-  Avatar,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuDivider,
-  useDisclosure,
-  Drawer,
-  DrawerBody,
-  DrawerHeader,
-  DrawerOverlay,
-  DrawerContent,
-  DrawerCloseButton,
-  Button,
-  Icon
-} from '../components/ui'
-import {
-  FiMenu,
   FiHome,
   FiBook,
   FiCalendar,
   FiShoppingCart,
   FiUsers,
   FiUser,
-  FiLogOut
+  FiLogOut,
+  FiMenu,
+  FiX
 } from 'react-icons/fi'
-import { useAuthStore } from '../stores/authStore'
+import { useState } from 'react'
+import './Layout.css'
 
 const navItems = [
   { path: '/', label: 'Dashboard', icon: FiHome },
@@ -45,134 +23,143 @@ const navItems = [
 ]
 
 function Layout() {
-  const { isOpen, onOpen, onClose } = useDisclosure()
   const location = useLocation()
+  const navigate = useNavigate()
   const { user, logout } = useAuthStore()
+  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [userMenuOpen, setUserMenuOpen] = useState(false)
 
   const handleLogout = () => {
     logout()
-    window.location.href = '/login'
+    navigate('/login')
   }
 
   return (
-    <Flex h="100vh">
-      <Box
-        display={{ base: 'none', md: 'block' }}
-        w="250px"
-        bg="white"
-        borderRight="1px"
-        borderColor="gray.200"
-      >
-        <VStack h="full" p={4} spacing={4}>
-          <Text fontSize="xl" fontWeight="bold" color="purple.600">
-            Bronwyn's Guide
-          </Text>
-          
-          <VStack w="full" spacing={2} flex={1}>
-            {navItems.map((item) => (
-              <Button
+    <div className="app-layout">
+      {/* Sidebar */}
+      <aside className={`sidebar ${sidebarOpen ? 'sidebar-open' : ''}`}>
+        <div className="sidebar-header">
+          <h2 className="sidebar-title">Bronwyn's Guide</h2>
+          <button 
+            className="sidebar-close mobile-only"
+            onClick={() => setSidebarOpen(false)}
+          >
+            <FiX />
+          </button>
+        </div>
+        
+        <nav className="sidebar-nav">
+          {navItems.map((item) => {
+            const Icon = item.icon
+            return (
+              <RouterLink
                 key={item.path}
-                as={RouterLink}
                 to={item.path}
-                w="full"
-                leftIcon={<Icon as={item.icon} />}
-                justifyContent="flex-start"
-                variant={location.pathname === item.path ? 'solid' : 'ghost'}
-                colorScheme={location.pathname === item.path ? 'purple' : 'gray'}
+                className={`nav-item ${location.pathname === item.path ? 'active' : ''}`}
+                onClick={() => setSidebarOpen(false)}
               >
-                {item.label}
-              </Button>
-            ))}
-          </VStack>
-        </VStack>
-      </Box>
+                <Icon className="nav-icon" />
+                <span>{item.label}</span>
+              </RouterLink>
+            )
+          })}
+        </nav>
+      </aside>
 
-      <Flex flex={1} direction="column">
-        <Box bg="white" px={4} py={3} borderBottom="1px" borderColor="gray.200">
-          <Flex justify="space-between" align="center">
-            <IconButton
-              display={{ base: 'flex', md: 'none' }}
-              onClick={onOpen}
-              variant="ghost"
-              aria-label="Open menu"
-              icon={<FiMenu />}
-            />
-            
-            <Text
-              display={{ base: 'block', md: 'none' }}
-              fontSize="lg"
-              fontWeight="bold"
-              color="purple.600"
+      {/* Overlay for mobile */}
+      {sidebarOpen && (
+        <div 
+          className="sidebar-overlay mobile-only" 
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
+      {/* Main Content */}
+      <div className="main-content">
+        {/* Header */}
+        <header className="app-header">
+          <button 
+            className="menu-toggle mobile-only"
+            onClick={() => setSidebarOpen(true)}
+          >
+            <FiMenu />
+          </button>
+          
+          <div className="header-title mobile-only">Bronwyn's Guide</div>
+          
+          <div className="header-spacer" />
+          
+          <div className="user-menu">
+            <button 
+              className="user-menu-trigger"
+              onClick={() => setUserMenuOpen(!userMenuOpen)}
             >
-              Bronwyn's Guide
-            </Text>
+              <div className="user-avatar">
+                {user?.firstName?.charAt(0) || 'U'}
+              </div>
+              <div className="user-info desktop-only">
+                <div className="user-name">
+                  {user ? `${user.firstName} ${user.lastName}` : 'User'}
+                </div>
+                <div className="user-email">{user?.email}</div>
+              </div>
+            </button>
+            
+            {userMenuOpen && (
+              <>
+                <div 
+                  className="dropdown-overlay" 
+                  onClick={() => setUserMenuOpen(false)}
+                />
+                <div className="user-dropdown">
+                  <RouterLink 
+                    to="/profile" 
+                    className="dropdown-item"
+                    onClick={() => setUserMenuOpen(false)}
+                  >
+                    <FiUser /> Profile
+                  </RouterLink>
+                  <hr className="dropdown-divider" />
+                  <button 
+                    className="dropdown-item text-red"
+                    onClick={handleLogout}
+                  >
+                    <FiLogOut /> Logout
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
+        </header>
 
-            <Box flex={1} />
+        {/* Page Content */}
+        <main className="page-content">
+          <Outlet />
+        </main>
 
-            <Menu>
-              <MenuButton>
-                <HStack spacing={3}>
-                  <Avatar size="sm" name={user ? `${user.firstName} ${user.lastName}` : ''} />
-                  <VStack display={{ base: 'none', md: 'flex' }} alignItems="flex-start" spacing={0}>
-                    <Text fontSize="sm" fontWeight="medium">
-                      {user ? `${user.firstName} ${user.lastName}` : 'User'}
-                    </Text>
-                    <Text fontSize="xs" color="gray.600">
-                      {user?.email}
-                    </Text>
-                  </VStack>
-                </HStack>
-              </MenuButton>
-              <MenuList>
-                <MenuItem as={RouterLink} to="/profile" icon={<FiUser />}>
-                  Profile
-                </MenuItem>
-                <MenuDivider />
-                <MenuItem onClick={handleLogout} icon={<FiLogOut />} color="red.500">
-                  Logout
-                </MenuItem>
-              </MenuList>
-            </Menu>
-          </Flex>
-        </Box>
+        {/* Footer */}
+        <footer className="app-footer">
+          <p>&copy; 2024 Bronwyn's Personal Chief. All rights reserved.</p>
+        </footer>
+      </div>
 
-        <Box flex={1} overflow="auto" bg="gray.50">
-          <Box minH="calc(100vh - 64px)" p={{ base: 4, md: 6 }} pb={{ base: 20, md: 6 }}>
-            <Outlet />
-          </Box>
-          <Footer />
-        </Box>
-      </Flex>
-
-      <MobileNav />
-
-      <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
-        <DrawerOverlay />
-        <DrawerContent>
-          <DrawerCloseButton />
-          <DrawerHeader>Menu</DrawerHeader>
-          <DrawerBody>
-            <VStack spacing={2}>
-              {navItems.map((item) => (
-                <Button
-                  key={item.path}
-                  as={RouterLink}
-                  to={item.path}
-                  w="full"
-                  leftIcon={<Icon as={item.icon} />}
-                  justifyContent="flex-start"
-                  variant={location.pathname === item.path ? 'solid' : 'ghost'}
-                  colorScheme={location.pathname === item.path ? 'purple' : 'gray'}
-                  onClick={onClose}
-                >
-                  {item.label}
-                </Button>
-              ))}
-            </VStack>
-          </DrawerBody>
-        </DrawerContent>
-      </Drawer>
-    </Flex>
+      {/* Mobile Bottom Navigation */}
+      <nav className="mobile-nav mobile-only">
+        {navItems.slice(0, 4).map((item) => {
+          const Icon = item.icon
+          return (
+            <RouterLink
+              key={item.path}
+              to={item.path}
+              className={`mobile-nav-item ${location.pathname === item.path ? 'active' : ''}`}
+            >
+              <Icon className="mobile-nav-icon" />
+              <span className="mobile-nav-label">{item.label.split(' ')[0]}</span>
+            </RouterLink>
+          )
+        })}
+      </nav>
+    </div>
   )
 }
 
