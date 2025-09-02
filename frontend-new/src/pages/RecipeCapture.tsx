@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   Box,
@@ -29,6 +29,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import axios from 'axios'
 import ImageUpload from '../components/ImageUpload'
 import SmartImageAnalysis from '../components/SmartImageAnalysis'
+import HealthAdaptedRecipe from '../components/HealthAdaptedRecipe'
 
 function RecipeCapture() {
   const [imageUrl, setImageUrl] = useState<string>('')
@@ -38,6 +39,8 @@ function RecipeCapture() {
   const [ingredients, setIngredients] = useState<any[]>([])
   const [nutritionInfo, setNutritionInfo] = useState<any>(null)
   const [showAnalysis, setShowAnalysis] = useState(false)
+  const [healthProfile, setHealthProfile] = useState<any>(null)
+  const [showHealthAdaptation, setShowHealthAdaptation] = useState(false)
   const { isOpen, onOpen, onClose } = useDisclosure()
   
   const navigate = useNavigate()
@@ -45,12 +48,56 @@ function RecipeCapture() {
   const queryClient = useQueryClient()
   const isMobile = useBreakpointValue({ base: true, md: false })
 
+  // Load health profile from localStorage
+  React.useEffect(() => {
+    const savedProfile = localStorage.getItem('userHealthProfile')
+    if (savedProfile) {
+      setHealthProfile(JSON.parse(savedProfile))
+    }
+  }, [])
+
   const saveRecipeMutation = useMutation({
     mutationFn: async () => {
+      // First, analyze recipe with health profile if available
+      let recipeData = {
+        title: recipeTitle || 'New Recipe',
+        ingredients: ingredients,
+        imageUrl: imageUrl || undefined,
+        text: recipeText || undefined
+      }
+
+      // If health profile exists, adapt the recipe
+      if (healthProfile && (healthProfile.healthConditions?.length > 0 || 
+                            healthProfile.allergies?.length > 0)) {
+        const adaptResponse = await axios.post('/api/adapt/recipe', {
+          recipe: recipeData,
+          healthProfile
+        })
+        
+        if (adaptResponse.data.adaptation && !adaptResponse.data.adaptation.isCompliant) {
+          // Show warning and use adapted recipe
+          const confirmed = window.confirm(
+            `This recipe contains ingredients that may not be safe for your health profile. ` +
+            `Safety Score: ${adaptResponse.data.adaptation.safetyScore}%. ` +
+            `Would you like to save the health-adapted version instead?`
+          )
+          
+          if (confirmed && adaptResponse.data.adaptation.adaptedRecipe) {
+            recipeData = {
+              ...recipeData,
+              ...adaptResponse.data.adaptation.adaptedRecipe,
+              healthAdapted: true,
+              originalRecipe: recipeData
+            }
+          }
+        }
+      }
+
       // Analyze recipe with AI
       const aiResponse = await axios.post('/api/ai/analyze-recipe', {
         imageUrl: imageUrl || undefined,
-        text: recipeText || undefined
+        text: recipeText || undefined,
+        healthProfile // Include health profile in AI analysis
       })
 
       // Save recipe
@@ -127,7 +174,40 @@ function RecipeCapture() {
               onIngredientsIdentified={setIngredients}
               onNutritionAnalyzed={setNutritionInfo}
             />
+            {healthProfile && ingredients.length > 0 && (
+              <Box mt={2}>
+                <Button
+                  size="sm"
+                  colorScheme="purple"
+                  onClick={() => setShowHealthAdaptation(!showHealthAdaptation)}
+                  leftIcon={<FiEdit />}
+                >
+                  {showHealthAdaptation ? 'Hide' : 'Show'} Health Analysis
+                </Button>
+              </Box>
+            )}
           </Box>
+        )}
+        {showHealthAdaptation && healthProfile && (
+          <HealthAdaptedRecipe
+            recipe={{
+              title: recipeTitle || 'Analyzed Recipe',
+              ingredients: ingredients.map(ing => 
+                `${ing.quantity || ''} ${ing.unit || ''} ${ing.name}`.trim()
+              )
+            }}
+            healthProfile={healthProfile}
+            onIngredientSubstitute={(original, substitute) => {
+              // Update ingredients with substitution
+              setIngredients(prev => prev.map(ing => {
+                if (ing.name === original || 
+                    `${ing.quantity || ''} ${ing.unit || ''} ${ing.name}`.trim() === original) {
+                  return { ...ing, name: substitute, healthSubstituted: true }
+                }
+                return ing
+              }))
+            }}
+          />
         )}
       </FormControl>
 

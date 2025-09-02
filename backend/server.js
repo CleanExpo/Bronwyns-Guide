@@ -41,6 +41,7 @@ import mealPlansRoutes from './routes/meal-plans.js';
 import shoppingListsRoutes from './routes/shopping-lists.js';
 import aiRoutes from './routes/ai.js';
 import imageAnalysisRoutes from './src/routes/imageAnalysis.js';
+import recipeAdaptationRoutes from './src/routes/recipeAdaptation.js';
 
 app.use('/api/auth', authRoutes);
 app.use('/api/users', usersRoutes);
@@ -50,6 +51,7 @@ app.use('/api/meal-plans', mealPlansRoutes);
 app.use('/api/shopping-lists', shoppingListsRoutes);
 app.use('/api/ai', aiRoutes);
 app.use('/api/image', imageAnalysisRoutes);
+app.use('/api/adapt', recipeAdaptationRoutes);
 
 // Health check endpoint
 app.get('/health', (req, res) => {
