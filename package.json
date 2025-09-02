@@ -13,7 +13,7 @@
     "build:backend": "cd backend && npm install",
     "install": "npm run install:backend && npm run install:frontend",
     "install:backend": "cd backend && npm install",
-    "install:frontend": "cd frontend-new && npm install",
+    "install:frontend": "cd frontend-new && npm install --legacy-peer-deps",
     "start": "cd backend && npm start",
     "vercel-build": "npm run install && npm run build",
     "postinstall": "npm run install:backend && npm run install:frontend"
