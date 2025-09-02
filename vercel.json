@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "buildCommand": "cd frontend-new && rm -rf node_modules dist && npm install --legacy-peer-deps && npm run build:vercel",
+  "buildCommand": "cd frontend-new && rm -rf node_modules dist .vite && npm cache clean --force && npm install --legacy-peer-deps && npm run build",
   "outputDirectory": "frontend-new/dist",
   "framework": "vite",
   "functions": {
