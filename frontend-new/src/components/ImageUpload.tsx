@@ -108,11 +108,11 @@ function ImageUpload({ onImageUploaded, maxSize = 10 * 1024 * 1024 }: ImageUploa
 
   if (preview || uploadedImage) {
     return (
-      <Box position="relative" w="full">
+      <Box position="relative" w="full" className="image-upload-container">
         <Image
           src={preview || uploadedImage || ''}
           alt="Recipe"
-          borderRadius="lg"
+          className="image-preview"
           w="full"
           h={{ base: '250px', md: '400px' }}
           objectFit="cover"
@@ -148,29 +148,22 @@ function ImageUpload({ onImageUploaded, maxSize = 10 * 1024 * 1024 }: ImageUploa
     <VStack spacing={4} w="full">
       <Box
         {...getRootProps()}
+        className={`dropzone ${isDragActive ? 'active' : ''}`}
         w="full"
-        p={{ base: 6, md: 8 }}
-        border="2px dashed"
-        borderColor={isDragActive ? 'purple.400' : 'gray.300'}
-        borderRadius="lg"
-        bg={isDragActive ? 'purple.50' : 'gray.50'}
-        cursor="pointer"
-        transition="all 0.2s"
-        _hover={{ borderColor: 'purple.400', bg: 'purple.50' }}
       >
         <input {...getInputProps()} />
         <VStack spacing={3}>
-          <Icon as={FiImage} boxSize={{ base: 10, md: 12 }} color="gray.400" />
+          <Icon as={FiImage} className="dropzone-icon" />
           {isDragActive ? (
-            <Text fontSize={{ base: 'sm', md: 'md' }} color="purple.600" fontWeight="medium">
+            <Text className="dropzone-text" style={{ color: '#0891b2', fontWeight: '600' }}>
               Drop the image here
             </Text>
           ) : (
             <>
-              <Text fontSize={{ base: 'sm', md: 'md' }} color="gray.600" textAlign="center">
+              <Text className="dropzone-text">
                 Drag & drop an image here, or click to select
               </Text>
-              <Text fontSize={{ base: 'xs', md: 'sm' }} color="gray.500">
+              <Text className="dropzone-text" style={{ fontSize: '0.75rem', opacity: 0.8 }}>
                 Maximum file size: 10MB
               </Text>
             </>
@@ -178,50 +171,42 @@ function ImageUpload({ onImageUploaded, maxSize = 10 * 1024 * 1024 }: ImageUploa
         </VStack>
       </Box>
 
-      <HStack spacing={4} w="full" display={{ base: 'flex', md: 'none' }}>
-        <Box flex={1}>
-          <Input
+      <div className="mobile-upload-buttons" style={{ display: window.innerWidth <= 768 ? 'flex' : 'none' }}>
+        <div style={{ flex: 1 }}>
+          <input
             type="file"
             accept="image/*"
             capture="environment"
             onChange={handleCameraCapture}
-            display="none"
+            style={{ display: 'none' }}
             id="camera-input"
           />
-          <Button
-            as="label"
+          <label
             htmlFor="camera-input"
-            leftIcon={<FiCamera />}
-            colorScheme="purple"
-            variant="outline"
-            w="full"
-            size={{ base: 'md', md: 'lg' }}
+            className="mobile-upload-button"
           >
+            <FiCamera style={{ fontSize: '1.2rem' }} />
             Take Photo
-          </Button>
-        </Box>
+          </label>
+        </div>
         
-        <Box flex={1}>
-          <Input
+        <div style={{ flex: 1 }}>
+          <input
             type="file"
             accept="image/*"
             onChange={handleCameraCapture}
-            display="none"
+            style={{ display: 'none' }}
             id="gallery-input"
           />
-          <Button
-            as="label"
+          <label
             htmlFor="gallery-input"
-            leftIcon={<FiUpload />}
-            colorScheme="purple"
-            variant="outline"
-            w="full"
-            size={{ base: 'md', md: 'lg' }}
+            className="mobile-upload-button"
           >
+            <FiUpload style={{ fontSize: '1.2rem' }} />
             From Gallery
-          </Button>
-        </Box>
-      </HStack>
+          </label>
+        </div>
+      </div>
 
       {isUploading && (
         <HStack spacing={2}>

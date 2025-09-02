@@ -226,7 +226,34 @@ export const ChakraProvider = ({ children, theme }: any) => children
 export type ThemeConfig = any
 export const Divider = () => <hr style={{ border: '1px solid #e2e8f0', margin: '1rem 0' }} />
 export const Spacer = () => <div style={{ flex: 1 }} />
-export const Image = ({ src, alt, ...props }: any) => <img src={src} alt={alt} {...props} />
+export const Image = ({ src, alt, w, h, objectFit = 'cover', borderRadius, ...props }: any) => {
+  const style: any = {
+    maxWidth: '100%',
+    height: 'auto',
+    display: 'block',
+    ...props.style
+  }
+  
+  // Handle responsive width/height
+  if (w === 'full' || w === '100%') style.width = '100%'
+  if (h) {
+    if (typeof h === 'object') {
+      // Responsive heights like { base: '250px', md: '400px' }
+      style.height = h.base || h.md || h
+      // For mobile-first, use base value
+      if (window.innerWidth <= 768 && h.base) {
+        style.height = h.base
+      }
+    } else {
+      style.height = h
+    }
+  }
+  
+  if (objectFit) style.objectFit = objectFit
+  if (borderRadius) style.borderRadius = borderRadius === 'lg' ? '8px' : borderRadius
+  
+  return <img src={src} alt={alt} style={style} {...props} />
+}
 export const Progress = ({ value, max = 100 }: any) => (
   <div style={{ background: '#e2e8f0', borderRadius: '4px', height: '8px', overflow: 'hidden' }}>
     <div style={{ background: '#6B4C93', width: `${(value / max) * 100}%`, height: '100%' }} />
