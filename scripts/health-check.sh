@@ -61,21 +61,43 @@ echo ""
 echo "2️⃣ Checking Frontend Dependencies..."
 echo "------------------------------------"
 cd frontend-new
-npm ls react react-dom vite 2>/dev/null >/dev/null
-check_status "Core React dependencies"
 
-npm ls @vitejs/plugin-react react-router-dom 2>/dev/null >/dev/null
-check_status "React plugins and router"
+# Check for pnpm first, then fall back to npm
+if command -v pnpm >/dev/null 2>&1 && [ -f "pnpm-lock.yaml" ]; then
+    pnpm ls react react-dom vite 2>/dev/null >/dev/null
+    check_status "Core React dependencies"
+    
+    pnpm ls @vitejs/plugin-react react-router-dom 2>/dev/null >/dev/null
+    check_status "React plugins and router"
+else
+    npm ls react react-dom vite 2>/dev/null >/dev/null
+    check_status "Core React dependencies"
+    
+    npm ls @vitejs/plugin-react react-router-dom 2>/dev/null >/dev/null
+    check_status "React plugins and router"
+fi
 
-npm ls axios @tanstack/react-query zustand 2>/dev/null >/dev/null
-check_status "State management and data fetching"
-
-npm ls react-icons react-dropzone react-hook-form 2>/dev/null >/dev/null
-check_status "UI component libraries"
-
-# Check for Chakra UI (should NOT exist)
-npm ls @chakra-ui/react 2>/dev/null >/dev/null
-if [ $? -ne 0 ]; then
+# Use pnpm or npm based on what's available
+if command -v pnpm >/dev/null 2>&1 && [ -f "pnpm-lock.yaml" ]; then
+    pnpm ls axios @tanstack/react-query zustand 2>/dev/null >/dev/null
+    check_status "State management and data fetching"
+    
+    pnpm ls react-icons react-dropzone react-hook-form 2>/dev/null >/dev/null
+    check_status "UI component libraries"
+    
+    # Check for Chakra UI (should NOT exist)
+    CHAKRA_CHECK=$(pnpm ls @chakra-ui/react 2>&1 | grep -c "not found")
+else
+    npm ls axios @tanstack/react-query zustand 2>/dev/null >/dev/null
+    check_status "State management and data fetching"
+    
+    npm ls react-icons react-dropzone react-hook-form 2>/dev/null >/dev/null
+    check_status "UI component libraries"
+    
+    # Check for Chakra UI (should NOT exist)
+    CHAKRA_CHECK=$(npm ls @chakra-ui/react 2>&1 | grep -c "not found")
+fi
+if [ "$CHAKRA_CHECK" -gt 0 ] || [ $? -ne 0 ]; then
     echo -e "${GREEN}✓${NC} Chakra UI properly removed"
 else
     echo -e "${RED}✗${NC} Chakra UI still present (should be removed)"
@@ -125,7 +147,12 @@ echo ""
 echo "6️⃣ Running Frontend Build Test..."
 echo "---------------------------------"
 cd frontend-new
-npm run build 2>/dev/null >/dev/null
+# Use pnpm or npm based on what's available
+if command -v pnpm >/dev/null 2>&1 && [ -f "pnpm-lock.yaml" ]; then
+    pnpm run build 2>/dev/null >/dev/null
+else
+    npm run build 2>/dev/null >/dev/null
+fi
 check_status "Frontend build successful"
 
 # Check if dist folder was created
