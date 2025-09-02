@@ -34,6 +34,48 @@ export const useAuthStore = create<AuthState>()(
       isAuthenticated: false,
 
       login: async (email: string, password: string) => {
+        // Mock authentication for test users
+        const mockUsers = [
+          {
+            email: 'bronwyn',
+            password: 'Bron1234',
+            user: {
+              userId: 'user-1',
+              email: 'bronwyn@example.com',
+              firstName: 'Bronwyn',
+              lastName: 'User'
+            }
+          },
+          {
+            email: 'kelly',
+            password: 'Kelly1234',
+            user: {
+              userId: 'user-2',
+              email: 'kelly@example.com',
+              firstName: 'Kelly',
+              lastName: 'User'
+            }
+          }
+        ]
+
+        // Check for mock users first (case-insensitive email)
+        const mockUser = mockUsers.find(u => 
+          u.email.toLowerCase() === email.toLowerCase() && 
+          u.password === password
+        )
+
+        if (mockUser) {
+          // Mock successful login
+          const token = 'mock-token-' + Date.now()
+          set({
+            user: mockUser.user,
+            token,
+            isAuthenticated: true
+          })
+          return
+        }
+
+        // Fall back to real API if not a mock user
         try {
           const response = await axios.post('/api/auth/login', { email, password })
           const { user, token } = response.data
@@ -47,6 +89,13 @@ export const useAuthStore = create<AuthState>()(
           })
         } catch (error) {
           console.error('Login failed:', error)
+          // If API fails, check if it's a mock user with wrong password
+          const isMockUser = mockUsers.some(u => 
+            u.email.toLowerCase() === email.toLowerCase()
+          )
+          if (isMockUser) {
+            throw new Error('Invalid password for test user')
+          }
           throw error
         }
       },
