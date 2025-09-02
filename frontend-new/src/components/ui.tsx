@@ -299,3 +299,266 @@ export const InputRightElement = ({ children, ...props }: any) => (
     {children}
   </div>
 )
+
+// Tag components
+export const Tag = ({ children, variant = 'subtle', colorScheme = 'gray', size = 'md', ...props }: any) => (
+  <span 
+    className={`tag tag-${variant} tag-${colorScheme} tag-${size}`}
+    style={{
+      display: 'inline-flex',
+      alignItems: 'center',
+      padding: size === 'sm' ? '2px 8px' : '4px 12px',
+      borderRadius: '4px',
+      fontSize: size === 'sm' ? '0.75rem' : '0.875rem',
+      background: variant === 'solid' ? '#6B4C93' : 'transparent',
+      color: variant === 'solid' ? 'white' : '#6B4C93',
+      border: variant === 'outline' ? '1px solid #6B4C93' : 'none',
+      cursor: props.onClick ? 'pointer' : 'default'
+    }}
+    {...props}
+  >
+    {children}
+  </span>
+)
+
+export const TagLabel = ({ children, ...props }: any) => (
+  <span {...props}>{children}</span>
+)
+
+export const TagCloseButton = ({ onClick, ...props }: any) => (
+  <button 
+    onClick={onClick}
+    style={{ 
+      marginLeft: '8px', 
+      background: 'none', 
+      border: 'none', 
+      cursor: 'pointer',
+      padding: '0 2px'
+    }}
+    {...props}
+  >
+    ×
+  </button>
+)
+
+// Wrap components
+export const Wrap = ({ children, spacing = 8, ...props }: any) => (
+  <div style={{ display: 'flex', flexWrap: 'wrap', gap: spacing }} {...props}>
+    {children}
+  </div>
+)
+
+export const WrapItem = ({ children, ...props }: any) => (
+  <div {...props}>{children}</div>
+)
+
+// Additional Menu components
+export const MenuItemOption = ({ children, value, isChecked, ...props }: any) => (
+  <label className="menu-item-option" style={{ display: 'flex', alignItems: 'center', padding: '8px 12px', cursor: 'pointer' }} {...props}>
+    <input type="checkbox" checked={isChecked} value={value} style={{ marginRight: '8px' }} readOnly />
+    {children}
+  </label>
+)
+
+export const MenuGroup = ({ children, title, ...props }: any) => (
+  <div className="menu-group" {...props}>
+    {title && <div style={{ padding: '8px 12px', fontWeight: 'bold', fontSize: '0.875rem' }}>{title}</div>}
+    {children}
+  </div>
+)
+
+export const MenuOptionGroup = ({ children, type = 'checkbox', value, onChange, ...props }: any) => {
+  const handleChange = (e: any) => {
+    if (type === 'checkbox') {
+      const newValue = [...(value || [])]
+      const itemValue = e.target.value
+      const index = newValue.indexOf(itemValue)
+      if (e.target.checked && index === -1) {
+        newValue.push(itemValue)
+      } else if (!e.target.checked && index !== -1) {
+        newValue.splice(index, 1)
+      }
+      onChange?.(newValue)
+    } else {
+      onChange?.(e.target.value)
+    }
+  }
+  
+  return (
+    <div onChange={handleChange} {...props}>
+      {React.Children.map(children, child => {
+        if (React.isValidElement(child)) {
+          return React.cloneElement(child as any, {
+            isChecked: type === 'checkbox' ? value?.includes(child.props.value) : value === child.props.value
+          })
+        }
+        return child
+      })}
+    </div>
+  )
+}
+
+// Collapse component
+export const Collapse = ({ in: isOpen, children, animateOpacity, ...props }: any) => (
+  <div 
+    style={{ 
+      display: isOpen ? 'block' : 'none',
+      opacity: animateOpacity && isOpen ? 1 : animateOpacity ? 0 : 1,
+      transition: animateOpacity ? 'opacity 0.2s' : undefined
+    }} 
+    {...props}
+  >
+    {children}
+  </div>
+)
+
+// Responsive hook
+export const useBreakpointValue = (values: any) => {
+  const [value, setValue] = React.useState(values.base || values)
+  
+  React.useEffect(() => {
+    const checkBreakpoint = () => {
+      const width = window.innerWidth
+      if (width >= 768 && values.md !== undefined) {
+        setValue(values.md)
+      } else if (width >= 1024 && values.lg !== undefined) {
+        setValue(values.lg)
+      } else {
+        setValue(values.base || values)
+      }
+    }
+    
+    checkBreakpoint()
+    window.addEventListener('resize', checkBreakpoint)
+    return () => window.removeEventListener('resize', checkBreakpoint)
+  }, [values])
+  
+  return value
+}
+
+// Modal components
+export const Modal = ({ isOpen, onClose, children, size = 'md', ...props }: any) => {
+  if (!isOpen) return null
+  
+  React.useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [isOpen])
+  
+  return (
+    <div 
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        zIndex: 1000,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '1rem'
+      }}
+      {...props}
+    >
+      {children}
+    </div>
+  )
+}
+
+export const ModalOverlay = ({ onClick, ...props }: any) => (
+  <div 
+    style={{
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      background: 'rgba(0, 0, 0, 0.5)',
+      zIndex: -1
+    }}
+    onClick={onClick}
+    {...props}
+  />
+)
+
+export const ModalContent = ({ children, ...props }: any) => (
+  <div 
+    style={{
+      background: 'white',
+      borderRadius: '8px',
+      maxWidth: '500px',
+      width: '100%',
+      maxHeight: '90vh',
+      overflow: 'auto',
+      position: 'relative',
+      boxShadow: '0 10px 25px rgba(0, 0, 0, 0.1)'
+    }}
+    onClick={(e) => e.stopPropagation()}
+    {...props}
+  >
+    {children}
+  </div>
+)
+
+export const ModalHeader = ({ children, ...props }: any) => (
+  <div 
+    style={{
+      padding: '1.5rem',
+      borderBottom: '1px solid #e2e8f0',
+      fontSize: '1.25rem',
+      fontWeight: 'bold'
+    }}
+    {...props}
+  >
+    {children}
+  </div>
+)
+
+export const ModalCloseButton = ({ onClick, ...props }: any) => (
+  <button 
+    style={{
+      position: 'absolute',
+      top: '1rem',
+      right: '1rem',
+      background: 'none',
+      border: 'none',
+      fontSize: '1.5rem',
+      cursor: 'pointer',
+      padding: '0.5rem',
+      lineHeight: 1
+    }}
+    onClick={onClick}
+    aria-label="Close"
+    {...props}
+  >
+    ×
+  </button>
+)
+
+export const ModalBody = ({ children, ...props }: any) => (
+  <div style={{ padding: '1.5rem' }} {...props}>
+    {children}
+  </div>
+)
+
+export const ModalFooter = ({ children, ...props }: any) => (
+  <div 
+    style={{
+      padding: '1.5rem',
+      borderTop: '1px solid #e2e8f0',
+      display: 'flex',
+      justifyContent: 'flex-end',
+      gap: '0.5rem'
+    }}
+    {...props}
+  >
+    {children}
+  </div>
+)
