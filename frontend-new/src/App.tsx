@@ -15,14 +15,17 @@ import './styles.css'
 
 function App() {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
+  
+  // Allow bypassing authentication - set to true to skip login
+  const BYPASS_AUTH = true
 
   return (
     <div style={{ minHeight: '100vh', background: '#f7fafc' }}>
       <Routes>
-        <Route path="/login" element={!isAuthenticated ? <Login /> : <Navigate to="/" />} />
-        <Route path="/register" element={!isAuthenticated ? <Register /> : <Navigate to="/" />} />
+        <Route path="/login" element={!isAuthenticated && !BYPASS_AUTH ? <Login /> : <Navigate to="/" />} />
+        <Route path="/register" element={!isAuthenticated && !BYPASS_AUTH ? <Register /> : <Navigate to="/" />} />
         
-        <Route path="/" element={isAuthenticated ? <Layout /> : <Navigate to="/login" />}>
+        <Route path="/" element={isAuthenticated || BYPASS_AUTH ? <Layout /> : <Navigate to="/login" />}>
           <Route index element={<Dashboard />} />
           <Route path="recipes" element={<Recipes />} />
           <Route path="recipes/new" element={<RecipeCapture />} />

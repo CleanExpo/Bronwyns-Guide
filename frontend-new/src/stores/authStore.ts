@@ -26,12 +26,20 @@ interface RegisterData {
   lastName: string
 }
 
+// Guest user for bypassing authentication
+const GUEST_USER: User = {
+  userId: 'guest-user',
+  email: 'guest@bronwynsguide.com',
+  firstName: 'Guest',
+  lastName: 'User'
+}
+
 export const useAuthStore = create<AuthState>()(
   persist(
     (set) => ({
-      user: null,
-      token: null,
-      isAuthenticated: false,
+      user: GUEST_USER, // Start with guest user
+      token: 'guest-token',
+      isAuthenticated: false, // Keep false to allow login option
 
       login: async (email: string, password: string) => {
         // Mock authentication for test users
