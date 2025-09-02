@@ -96,6 +96,18 @@ export const Grid = ({ children, columns = 1, gap = 16, ...props }: any) => (
   </div>
 )
 
+export const GridItem = ({ children, colSpan = 1, rowSpan = 1, ...props }: any) => (
+  <div 
+    style={{ 
+      gridColumn: `span ${colSpan}`,
+      gridRow: `span ${rowSpan}`
+    }} 
+    {...props}
+  >
+    {children}
+  </div>
+)
+
 export const Card = ({ children, ...props }: any) => (
   <div className="card" {...props}>
     {children}
