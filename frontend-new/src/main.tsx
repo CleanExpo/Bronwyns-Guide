@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { BrowserRouter } from 'react-router-dom'
+import { Toaster } from 'react-hot-toast'
 import App from './App'
 import './index.css'
 import './styles/accessibility.css'
@@ -66,6 +67,22 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <BrowserRouter>
       <SimpleErrorBoundary>
         <App />
+        <Toaster 
+          position="top-right"
+          containerStyle={{
+            top: 20,
+            right: 20,
+          }}
+          toastOptions={{
+            duration: 4000,
+            style: {
+              borderRadius: '8px',
+              padding: '12px',
+              fontSize: '14px',
+              maxWidth: '90vw',
+            },
+          }}
+        />
       </SimpleErrorBoundary>
     </BrowserRouter>
   </QueryClientProvider>

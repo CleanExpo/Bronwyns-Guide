@@ -1,4 +1,5 @@
 import React from 'react'
+import toast from 'react-hot-toast'
 import '../styles.css'
 
 // Simple UI components to replace Chakra UI
@@ -193,7 +194,60 @@ export interface UseToastOptions {
 
 export const useToast = () => {
   return (options?: UseToastOptions) => {
-    console.log('Toast shown', options)
+    const status = options?.status || 'info'
+    const message = options?.title || options?.description || ''
+    
+    switch (status) {
+      case 'success':
+        toast.success(message, {
+          duration: options?.duration || 4000,
+          position: 'top-right',
+          style: {
+            background: '#dcfce7',
+            color: '#166534',
+            border: '1px solid #16a34a',
+            borderRadius: '8px',
+          },
+        })
+        break
+      case 'error':
+        toast.error(message, {
+          duration: options?.duration || 4000,
+          position: 'top-right',
+          style: {
+            background: '#fee2e2',
+            color: '#991b1b',
+            border: '1px solid #ef4444',
+            borderRadius: '8px',
+          },
+        })
+        break
+      case 'warning':
+        toast(message, {
+          icon: '⚠️',
+          duration: options?.duration || 4000,
+          position: 'top-right',
+          style: {
+            background: '#fef3c7',
+            color: '#92400e',
+            border: '1px solid #f59e0b',
+            borderRadius: '8px',
+          },
+        })
+        break
+      default:
+        toast(message, {
+          icon: 'ℹ️',
+          duration: options?.duration || 4000,
+          position: 'top-right',
+          style: {
+            background: '#dbeafe',
+            color: '#1e40af',
+            border: '1px solid #3b82f6',
+            borderRadius: '8px',
+          },
+        })
+    }
   }
 }
 
