@@ -191,6 +191,11 @@ export const useColorMode = () => {
   return { colorMode: 'light', toggleColorMode: () => {} }
 }
 
+export const useColorModeValue = (lightValue: any, darkValue: any) => {
+  // Always return light value since we're not supporting dark mode yet
+  return lightValue
+}
+
 export const SimpleGrid = Grid
 export const Stack = VStack
 export const Center = ({ children, ...props }: any) => (
